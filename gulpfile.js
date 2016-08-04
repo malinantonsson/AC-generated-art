@@ -1,5 +1,6 @@
 // Requiring Gulp
 var gulp = require('gulp');
+var babel = require("gulp-babel");
 // Requires the gulp-sass plugin
 var sass = require('gulp-sass');
 var autoprefixer = require('gulp-autoprefixer');
@@ -26,7 +27,10 @@ var appPath = './src';
 var distPath = 'dist';
 
 
-sassPath = appPath + '/sass/';
+var sassPath = appPath + '/sass/';
+var jsSrcPath = appPath + '/js/';
+
+var jsDistPath = distPath + '/js/';
 
 var config = {
   defaultPort: 3000,
@@ -77,12 +81,19 @@ var scriptsFinish = lazypipe()
     return $.if(config.minify, $.rename({suffix: '.min'}));
   })
   .pipe(function () {
-    return $.if(config.minify, gulp.dest('dist/js'));
+    return $.if(config.minify, gulp.dest(jsDistPath));
   });
 
+gulp.task('libs', function() {
+  return gulp.src(jsSrcPath + '/libs/*.js')
+  .pipe(gulp.dest(jsDistPath + '/libs'))
+});
+
+
 // Lint and build scripts
-gulp.task('scripts', function() {
-  return gulp.src(appPath + '/js/*.js')
+gulp.task('scripts', ['libs'], function() {
+  return gulp.src(jsSrcPath + '*.js')
+    .pipe(babel())
     .pipe($.plumber({errorHandler: $.notify.onError('Error: <%= error.message %>')}))
     .pipe($.if(config.isWatching, $.jshint()))
     .pipe($.if(config.isWatching, $.jshint.reporter('jshint-stylish')))
