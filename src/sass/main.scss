@@ -12,3 +12,11 @@
 @import 'typography';
 
 @import 'placeholders';
+@import 'binary-clock';
+
+
+body {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
