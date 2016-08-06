@@ -11,6 +11,8 @@ $binary-clock: (
 	)
 );
 
+$binary-transition: background-color, 300ms;
+
 .binary-clock {
 	width: 100%;
 	height: 100%;
@@ -28,13 +30,16 @@ $binary-clock: (
 
 .binaryOn { 
 	background-color: map-deep-get($binary-clock, default, on); 
+	transition: $binary-transition;
 }
 
 .binaryOff { 
 	background-color: map-deep-get($binary-clock, default, off);
+	transition: $binary-transition;
 }
 
 .binaryOffLimit {
 	background-color: map-deep-get($binary-clock, default, offLimit);
+	transition: $binary-transition;
 }
 
