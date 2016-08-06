@@ -1,6 +1,6 @@
 @for $i from -10 through 40 {
 	.temp-#{$i} {
-		.binaryOn { 
+		.binaryOffLimit { 
 			background-color: #0000ff; 
 		}
 
@@ -8,8 +8,8 @@
 			background-color: lighten(#0000ff, 10%);
 		}
 
-		.binaryOffLimit {
-			background-color: lighten(#0000ff, 10%);
+		.binaryOn {
+			background-color: lighten(#0000ff, 30%);
 		}
 	}
 }

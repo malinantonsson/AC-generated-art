@@ -45,6 +45,7 @@ var art = {
 	init: function() {
 		binaryClock.runBinaryClock();
 		this.getWeather();
+		window.setInterval(this.getWeather, 100000);
 	},
 
 	ui: {
@@ -102,10 +103,11 @@ var art = {
 	},
 
 	getWeather: function() {
-		var self = this;
+		var self = art;
+		console.log(this);
 
 		if(window.fetch) {
-			fetch(this.settings.weatherApi, {
+			fetch(self.settings.weatherApi, {
 				method: 'get'
 			})
 			.then(function(response) {
@@ -122,7 +124,7 @@ var art = {
 			});	
 
 		} else { //if fetch is not supported, fallback to Ajax
-			$.ajax(this.settings.weatherApi)
+			$.ajax(self.settings.weatherApi)
 			.done(function(response) {
 			  	var temp = Math.round(response.main.temp);
 				self.setColour(temp);
