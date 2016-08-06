@@ -77,9 +77,12 @@ var art = {
 				self.setColour(temp);
 			});	
 
-		} else {
-			//TODO: set up Ajax fallback
-			console.log('use ajax!');
+		} else { //if fetch is not supported, fallback to Ajax
+			$.ajax(this.settings.weatherApi)
+			.done(function(response) {
+			  	var temp = Math.round(response.main.temp);
+				self.setColour(temp);
+			});
 		}
 	}
 }
