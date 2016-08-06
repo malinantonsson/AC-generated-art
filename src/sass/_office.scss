@@ -1,0 +1,17 @@
+$office-colour: (
+	default: #ffffff
+);
+
+.office-loc {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+
+	.icon--plus {
+		width: 7%;
+		fill: map-get($office-colour, default);
+		position: absolute;
+	    top: 32%;
+    	left: 42%;
+	}
+}

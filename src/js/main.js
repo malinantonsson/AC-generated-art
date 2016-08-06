@@ -90,5 +90,4 @@ var art = {
 
 $( document ).ready(function() {
   art.init();
-  console.log(window.fetch);
 });
