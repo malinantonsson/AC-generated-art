@@ -1,8 +1,13 @@
 $binary-clock: (
-	hot: (
+	default: (
 		offLimit: #ff0000,
 		on: lighten( #ff0000, 10% ),
 		off: lighten( #ff0000, 30% )
+	),
+	temp-22: (
+		offLimit: #0000ff,
+		on: lighten( #0000ff, 10% ),
+		off: lighten( #0000ff, 30% )
 	)
 );
 
@@ -22,13 +27,14 @@ $binary-clock: (
 }
 
 .binaryOn { 
-	background-color: map-deep-get($binary-clock, hot, on); 
+	background-color: map-deep-get($binary-clock, default, on); 
 }
 
 .binaryOff { 
-	background-color: map-deep-get($binary-clock, hot, off);
+	background-color: map-deep-get($binary-clock, default, off);
 }
 
 .binaryOffLimit {
-	background-color: map-deep-get($binary-clock, hot, offLimit);
+	background-color: map-deep-get($binary-clock, default, offLimit);
 }
+
