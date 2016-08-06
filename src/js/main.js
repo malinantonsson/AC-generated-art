@@ -126,6 +126,10 @@ var art = {
 			.done(function(response) {
 			  	var temp = Math.round(response.main.temp);
 				self.setColour(temp);
+
+				var windDeg = response.wind.deg;
+				var windSpeed = response.wind.speed;
+				self.setWind(windDeg, windSpeed);
 				//TODO: wind
 			});
 		}
