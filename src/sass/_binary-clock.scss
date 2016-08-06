@@ -1,3 +1,11 @@
+$binary-clock: (
+	hot: (
+		offLimit: #ff0000,
+		on: lighten( #ff0000, 10% ),
+		off: lighten( #ff0000, 30% )
+	)
+);
+
 .binary-clock {
 	width: 100%;
 	height: 100%;
@@ -7,16 +15,20 @@
 	position: absolute;
 }
 
-.binaryOn { 
-	background-color: red; 
-}
-
-.binaryOff { 
-	background-color: #FFEAEA; 
-}
-
 .binary-clock span { 
 	min-height: 16%;
 	display: block;
 	width: 33.33%; 
+}
+
+.binaryOn { 
+	background-color: map-deep-get($binary-clock, hot, on); 
+}
+
+.binaryOff { 
+	background-color: map-deep-get($binary-clock, hot, off);
+}
+
+.binaryOffLimit {
+	background-color: map-deep-get($binary-clock, hot, offLimit);
 }
