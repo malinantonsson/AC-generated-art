@@ -13,5 +13,14 @@ $office-colour: (
 		position: absolute;
 	    top: 32%;
     	left: 42%;
+    	opacity: 1;
+
+    	transition-property: height, width, left, top, opacity;
+    	transition-duration: 3s;
+	}
+
+	.icon--plus.has-moved {
+		width: 9%;
+		opacity: 0.5;
 	}
 }
