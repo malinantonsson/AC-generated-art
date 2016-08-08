@@ -44,8 +44,8 @@ var binaryClock = {
 var art = {
 	init: function() {
 		binaryClock.runBinaryClock();
-		this.getWeather();
-		window.setInterval(this.getWeather, 100000);
+		this.getWeather(); 
+		window.setInterval(this.getWeather, 600000); //600000 = 10 minutes
 	},
 
 	ui: {
