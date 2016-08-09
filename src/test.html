@@ -1,0 +1,144 @@
+<html>
+  
+<head>
+ <style>
+  body {
+    background-color: #eee;
+  }
+  canvas {
+    border: 1px solid #000;
+  }
+</style> 
+
+</head>
+<body>
+
+<canvas id="canvas" width="800px" height="600px"></canvas>  
+
+<script>
+
+  //16 lines
+  var startcurve = 300;
+  var lines = [
+    {
+      sx: 0, //start x
+      sy: 300, //start y
+      cx: 300, //control point x
+      cy: 400, //control point y
+      ex: 800,
+      ey: 500
+    },
+    {
+      sx: 0, //start x
+      sy: 340, //start y
+      cx: 300, //control point x
+      cy: 400, //control point y
+      ex: 800,
+      ey: 450
+    },
+    {
+      sx: 0, //start x
+      sy: 380, //start y
+      cx: 300, //control point x
+      cy: 400, //control point y
+      ex: 800,
+      ey: 400
+    },
+    {
+      sx: 0, //start x
+      sy: 400, //start y
+      cx: 300, //control point x
+      cy: 400, //control point y
+      ex: 800, 
+      ey: 380
+    },
+    {
+      sx: 0, //start x
+      sy: 410, //start y
+      cx: 300, //control point x
+      cy: 400, //control point y
+      ex: 800, 
+      ey: 370
+    },
+    {
+      sx: 0, //start x
+      sy: 430, //start y
+      cx: 300, //control point x
+      cy: 400, //control point y
+      ex: 800, 
+      ey: 360
+    }
+  ];
+
+
+
+  var isLeft = true;
+  function draw1() {
+
+    if (canvas.getContext) {
+      var ctx = canvas.getContext('2d');
+
+      ctx.save();
+      ctx.clearRect(0,0,800,600); // clear canvas
+      ctx.save();
+      // Quadratric curves example
+      
+      for(var i = 0; i < lines.length; i++) {
+        ctx.beginPath();
+        ctx.moveTo(lines[i].sx,lines[i].sy); //starting point
+        ctx.quadraticCurveTo(lines[i].cx,lines[i].cy,lines[i].ex,lines[i].ey);
+        ctx.stroke();
+
+        if(isLeft) {
+          if(lines[i].cx < 100) {
+            isLeft = false;
+          }
+          lines[i].cx = lines[i].cx - 1;
+        } else {
+          if(lines[i].cx > 600) {
+            isLeft = true;
+          }
+          lines[i].cx = lines[i].cx + 1;
+        }
+        
+      }
+
+     
+
+      ctx.restore();
+
+      
+      window.requestAnimationFrame(draw1);
+    }
+  }
+  
+/*  function draw2() {
+    if (canvas.getContext) {
+      var ctx = canvas.getContext('2d');
+
+      // Quadratric curves example
+      ctx.beginPath();
+      ctx.moveTo(0,340); //starting point
+      ctx.quadraticCurveTo(300,400,800,450);
+      ctx.stroke();
+    }
+  }
+
+  function draw3() {
+    if (canvas.getContext) {
+      var ctx = canvas.getContext('2d');
+
+      // Quadratric curves example
+      ctx.beginPath();
+      ctx.moveTo(0,340); //starting point
+      ctx.quadraticCurveTo(300,400,800,450);
+      ctx.stroke();
+    }
+  }*/
+
+  draw1();
+/*  draw2();
+  draw3();*/
+</script>
+</body>
+</html>

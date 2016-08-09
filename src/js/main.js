@@ -56,7 +56,13 @@ var art = {
 	settings: {
 		weatherApiKey: '18b3eeda7e71d2d3946ccfbfeea86742',
 		londonId: '2643743',
-		weatherApi: 'http://api.openweathermap.org/data/2.5/weather?q=London,uk&units=metric&APPID=18b3eeda7e71d2d3946ccfbfeea86742' 
+		weatherApi: 'http://api.openweathermap.org/data/2.5/weather?q=London,uk&units=metric&APPID=18b3eeda7e71d2d3946ccfbfeea86742',
+		marineApiKey: '643896879b28b84c3dcaa9e95e7ee645732ee4f4',
+		LATmin: 51.4817,
+		LATmax: 51.51184,
+		LONmin: -0.13578,
+		LONmax: -0.05373,
+		marineApi: 'http://services.marinetraffic.com/api/exportvessels/643896879b28b84c3dcaa9e95e7ee645732ee4f4/MINLAT:51.4817/MAXLAT:51.51184/MINLON:-0.13578/MAXLON:-0.05373/timespan:10/protocol:json' 
 	},
 
 	moveOffice: function(x, y, speed) {
