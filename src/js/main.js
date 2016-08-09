@@ -54,9 +54,12 @@ var art = {
 	}, 
 
 	settings: {
-		weatherApiKey: '18b3eeda7e71d2d3946ccfbfeea86742',
+		newWeatherAPi: 'http://api.wunderground.com/api/807d2301f79ea0f4/conditions/q/UK/London.json',
+		weatherApiKey: '807d2301f79ea0f4',
+		callWeatherAPI: false,
+		exampleData: '../new-example.json',
 		londonId: '2643743',
-		weatherApi: 'http://api.openweathermap.org/data/2.5/weather?q=London,uk&units=metric&APPID=18b3eeda7e71d2d3946ccfbfeea86742',
+		weatherApi: 'http://api.openweathermap.org/data/2.5/weather?q=London,uk&units=metric&APPID=807d2301f79ea0f4',
 		marineApiKey: '643896879b28b84c3dcaa9e95e7ee645732ee4f4',
 		LATmin: 51.4817,
 		LATmax: 51.51184,
@@ -111,35 +114,68 @@ var art = {
 	getWeather: function() {
 		var self = art;
 		console.log(this);
+		if(self.settings.callWeatherAPI) {
+			if(window.fetch) {
+				fetch(self.settings.weatherApi, {
+					method: 'get'
+				})
+				.then(function(response) {
+					return response.json();
+				})
+				.then(function(weather) {
+					console.log(weather);
+					var temp = Math.round(weather.main.temp);
+					self.setColour(temp);
 
-		if(window.fetch) {
-			fetch(self.settings.weatherApi, {
-				method: 'get'
-			})
-			.then(function(response) {
-				return response.json();
-			})
-			.then(function(weather) {
-				console.log(weather);
-				var temp = Math.round(weather.main.temp);
-				self.setColour(temp);
+					var windDeg = weather.wind.deg;
+					var windSpeed = weather.wind.speed;
+					self.setWind(windDeg, windSpeed);
+				});	
 
-				var windDeg = weather.wind.deg;
-				var windSpeed = weather.wind.speed;
-				self.setWind(windDeg, windSpeed);
-			});	
+			} else { //if fetch is not supported, fallback to Ajax
+				$.ajax(self.settings.weatherApi)
+				.done(function(response) {
+				  	var temp = Math.round(response.main.temp);
+					self.setColour(temp);
 
-		} else { //if fetch is not supported, fallback to Ajax
-			$.ajax(self.settings.weatherApi)
-			.done(function(response) {
-			  	var temp = Math.round(response.main.temp);
-				self.setColour(temp);
+					var windDeg = response.wind.deg;
+					var windSpeed = response.wind.speed;
+					self.setWind(windDeg, windSpeed);
+					//TODO: wind
+				});
+			}
+		} else {
+			if(window.fetch) {
+				fetch(self.settings.exampleData, {
+					method: 'get'
+				})
+				.then(function(response) {
+					return response.json();
+				})
+				.then(function(weather) {
+					console.log(weather);
+					var current_observation = weather.current_observation;
+					var temp = Math.round(current_observation.temp_c);
+					self.setColour(temp);
 
-				var windDeg = response.wind.deg;
-				var windSpeed = response.wind.speed;
-				self.setWind(windDeg, windSpeed);
-				//TODO: wind
-			});
+					var windDeg = current_observation.wind_degrees;
+					var windSpeed = current_observation.wind_mph;
+					self.setWind(windDeg, windSpeed);
+				});	
+
+			} else { //if fetch is not supported, fallback to Ajax
+				$.ajax(self.settings.exampleData)
+				.done(function(response) {
+				  	var current_observation = weather.current_observation;
+					var temp = Math.round(current_observation.temp_c);
+					self.setColour(temp);
+
+					var windDeg = current_observation.wind_degrees;
+					var windSpeed = current_observation.wind_mph;
+					self.setWind(windDeg, windSpeed);
+				});
+			}
+
 		}
 	}
 }
