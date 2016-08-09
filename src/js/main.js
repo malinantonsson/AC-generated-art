@@ -45,51 +45,131 @@ var tide = {
 	lines:[
 	    {
 	      sx: 0, //start x
-	      sy: 300, //start y
+	      sy: 250, //start y
 	      cx: 300, //control point x
-	      cy: 400, //control point y
-	      ex: 800,
-	      ey: 500
-	    },
-	    {
-	      sx: 0, //start x
-	      sy: 340, //start y
-	      cx: 300, //control point x
-	      cy: 400, //control point y
+	      cy: 500, //control point y
 	      ex: 800,
 	      ey: 450
 	    },
 	    {
 	      sx: 0, //start x
+	      sy: 280, //start y
+	      cx: 300, //control point x
+	      cy: 500, //control point y
+	      ex: 800,
+	      ey: 410
+	    },
+	    {
+	      sx: 0, //start x
+	      sy: 300, //start y
+	      cx: 300, //control point x
+	      cy: 500, //control point y
+	      ex: 800,
+	      ey: 370
+	    },
+	    {
+	      sx: 0, //start x
+	      sy: 340, //start y
+	      cx: 300, //control point x
+	      cy: 500, //control point y
+	      ex: 800,
+	      ey: 330
+	    },
+	    {
+	      sx: 0, //start x
 	      sy: 380, //start y
 	      cx: 300, //control point x
-	      cy: 400, //control point y
+	      cy: 500, //control point y
 	      ex: 800,
-	      ey: 400
+	      ey: 300
 	    },
 	    {
 	      sx: 0, //start x
 	      sy: 400, //start y
 	      cx: 300, //control point x
-	      cy: 400, //control point y
+	      cy: 500, //control point y
 	      ex: 800, 
-	      ey: 380
+	      ey: 280
 	    },
 	    {
 	      sx: 0, //start x
 	      sy: 410, //start y
 	      cx: 300, //control point x
-	      cy: 400, //control point y
+	      cy: 500, //control point y
 	      ex: 800, 
-	      ey: 370
+	      ey: 260
 	    },
 	    {
 	      sx: 0, //start x
 	      sy: 430, //start y
 	      cx: 300, //control point x
-	      cy: 400, //control point y
+	      cy: 500, //control point y
 	      ex: 800, 
-	      ey: 360
+	      ey: 240
+	    },
+	    {
+	      sx: 0, //start x
+	      sy: 450, //start y
+	      cx: 300, //control point x
+	      cy: 500, //control point y
+	      ex: 800, 
+	      ey: 220
+	    },
+	    {
+	      sx: 0, //start x
+	      sy: 470, //start y
+	      cx: 300, //control point x
+	      cy: 500, //control point y
+	      ex: 800, 
+	      ey: 180
+	    },
+	    {
+	      sx: 0, //start x
+	      sy: 490, //start y
+	      cx: 300, //control point x
+	      cy: 500, //control point y
+	      ex: 800, 
+	      ey: 160
+	    },
+	    {
+	      sx: 0, //start x
+	      sy: 520, //start y
+	      cx: 300, //control point x
+	      cy: 500, //control point y
+	      ex: 800, 
+	      ey: 140
+	    },
+	    {
+	      sx: 0, //start x
+	      sy: 550, //start y
+	      cx: 300, //control point x
+	      cy: 500, //control point y
+	      ex: 800, 
+	      ey: 120
+	    },
+	    {
+	      sx: 0, //start x
+	      sy: 570, //start y
+	      cx: 300, //control point x
+	      cy: 500, //control point y
+	      ex: 800, 
+	      ey: 80
+	    },
+	    {
+	      sx: 0, //start x
+	      sy: 590, //start y
+	      cx: 300, //control point x
+	      cy: 500, //control point y
+	      ex: 800, 
+	      ey: 40
+	    },
+	    {
+	      sx: 0, //start x
+	      sy: 590, //start y
+	      cx: 300, //control point x
+	      cy: 500, //control point y
+	      ex: 800, 
+	      ey: 0
 	    }
 	],
 
@@ -121,7 +201,7 @@ var tide = {
 		        ctx.beginPath();
 		        ctx.moveTo(tide.lines[i].sx,tide.lines[i].sy); //starting point
 		        ctx.quadraticCurveTo(tide.lines[i].cx,tide.lines[i].cy,tide.lines[i].ex,tide.lines[i].ey);
-		         ctx.strokeStyle = '#ffffff';
+		         ctx.strokeStyle = 'rgba(255,255,255, 0.5)';
 		        ctx.stroke();
 
 		        if(tide.settings.isLeft) {
@@ -148,7 +228,10 @@ var art = {
 	init: function() {
 		binaryClock.runBinaryClock();
 		this.getWeather(); 
-		window.setInterval(this.getWeather, 600000); //600000 = 10 minutes
+		if(!this.settings.isDev) {
+			window.setInterval(this.getWeather, 600000); //600000 = 10 minutes
+		}
+		
 		tide.initCanvas();
 	},
 
@@ -158,6 +241,7 @@ var art = {
 	}, 
 
 	settings: {
+		isDev: true,
 		newWeatherAPi: 'http://api.wunderground.com/api/807d2301f79ea0f4/conditions/q/UK/London.json',
 		weatherApiKey: '807d2301f79ea0f4',
 		callWeatherAPI: false,
@@ -169,7 +253,29 @@ var art = {
 		LATmax: 51.51184,
 		LONmin: -0.13578,
 		LONmax: -0.05373,
-		marineApi: 'http://services.marinetraffic.com/api/exportvessels/643896879b28b84c3dcaa9e95e7ee645732ee4f4/MINLAT:51.4817/MAXLAT:51.51184/MINLON:-0.13578/MAXLON:-0.05373/timespan:10/protocol:json' 
+		marineApi: 'http://services.marinetraffic.com/api/exportvessels/643896879b28b84c3dcaa9e95e7ee645732ee4f4/MINLAT:51.4817/MAXLAT:51.51184/MINLON:-0.13578/MAXLON:-0.05373/timespan:10/protocol:json',
+		temp: 42,
+		tempDown: true 
+	},
+
+	devWeather: function() {
+
+		if(!art.settings.isDev) return;
+
+		if(art.settings.isDown) {
+          if(art.settings.temp < -10) {
+            art.settings.isDown = false;
+          }
+          art.settings.temp = art.settings.temp - 1;
+        } else {
+          if(art.settings.temp > 42) {
+            art.settings.isDown = true;
+          }
+          art.settings.temp = art.settings.temp + 1;
+        } 
+
+        art.setColour(art.settings.temp);
+
 	},
 
 	moveOffice: function(x, y, speed) {
@@ -217,8 +323,7 @@ var art = {
 
 	getWeather: function() {
 		var self = art;
-		console.log(this);
-		if(self.settings.callWeatherAPI) {
+		if(!self.settings.isDev) {
 			if(window.fetch) {
 				fetch(self.settings.weatherApi, {
 					method: 'get'
@@ -265,6 +370,8 @@ var art = {
 					var windDeg = current_observation.wind_degrees;
 					var windSpeed = current_observation.wind_mph;
 					self.setWind(windDeg, windSpeed);
+					
+					window.setInterval(self.devWeather, 2000);
 				});	
 
 			} else { //if fetch is not supported, fallback to Ajax
@@ -277,6 +384,9 @@ var art = {
 					var windDeg = current_observation.wind_degrees;
 					var windSpeed = current_observation.wind_mph;
 					self.setWind(windDeg, windSpeed);
+
+					//self.devWeather(temp);
+					window.setInterval(self.devWeather, 2000);
 				});
 			}
 

@@ -10,7 +10,7 @@
 		}
 
 		.binaryOn {
-			background-color: lighten(map-get($binary-clock, temp-#{$i}), 30%);
+			background-color: lighten(map-get($binary-clock, temp-#{$i}), 20%);
 		}
 	}
 }
