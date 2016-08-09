@@ -1,15 +1,16 @@
-@for $i from -10 through 40 {
+@for $i from -10 through 42 {
+	
 	.temp-#{$i} {
 		.binaryOffLimit { 
-			background-color: #0000ff; 
+			background-color: map-get($binary-clock, temp-#{$i}); 
 		}
 
 		.binaryOff { 
-			background-color: lighten(#0000ff, 10%);
+			background-color: lighten(map-get($binary-clock, temp-#{$i}), 10%);
 		}
 
 		.binaryOn {
-			background-color: lighten(#0000ff, 30%);
+			background-color: lighten(map-get($binary-clock, temp-#{$i}), 30%);
 		}
 	}
 }
