@@ -6,11 +6,11 @@
 		}
 
 		.binaryOff { 
-			background-color: lighten(map-get($binary-clock, temp-#{$i}), 10%);
+			background-color: lighten(map-get($binary-clock, temp-#{$i}), 2%);
 		}
 
 		.binaryOn {
-			background-color: lighten(map-get($binary-clock, temp-#{$i}), 20%);
+			background-color: lighten(map-get($binary-clock, temp-#{$i}), 5%);
 		}
 	}
 }
