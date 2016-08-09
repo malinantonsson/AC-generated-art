@@ -70,10 +70,16 @@
     }
   ];
 
+    clientW = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    clientH = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+
+    canvas.style.width = clientW - 5 + 'px';
+    canvas.style.height = clientH - 5 + 'px';
 
 
   var isLeft = true;
-  function draw1() {
+  console.log(canvas);
+  function draw() {
 
     if (canvas.getContext) {
       var ctx = canvas.getContext('2d');
@@ -108,37 +114,14 @@
       ctx.restore();
 
       
-      window.requestAnimationFrame(draw1);
+      window.requestAnimationFrame(draw);
     }
   }
+
+
   
-/*  function draw2() {
-    if (canvas.getContext) {
-      var ctx = canvas.getContext('2d');
 
-      // Quadratric curves example
-      ctx.beginPath();
-      ctx.moveTo(0,340); //starting point
-      ctx.quadraticCurveTo(300,400,800,450);
-      ctx.stroke();
-    }
-  }
-
-  function draw3() {
-    if (canvas.getContext) {
-      var ctx = canvas.getContext('2d');
-
-      // Quadratric curves example
-      ctx.beginPath();
-      ctx.moveTo(0,340); //starting point
-      ctx.quadraticCurveTo(300,400,800,450);
-      ctx.stroke();
-    }
-  }*/
-
-  draw1();
-/*  draw2();
-  draw3();*/
+  draw();
 </script>
 </body>
 </html>

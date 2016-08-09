@@ -40,12 +40,116 @@ var binaryClock = {
 	}
 }
 
+var tide = {
+	//16 lines
+	lines:[
+	    {
+	      sx: 0, //start x
+	      sy: 300, //start y
+	      cx: 300, //control point x
+	      cy: 400, //control point y
+	      ex: 800,
+	      ey: 500
+	    },
+	    {
+	      sx: 0, //start x
+	      sy: 340, //start y
+	      cx: 300, //control point x
+	      cy: 400, //control point y
+	      ex: 800,
+	      ey: 450
+	    },
+	    {
+	      sx: 0, //start x
+	      sy: 380, //start y
+	      cx: 300, //control point x
+	      cy: 400, //control point y
+	      ex: 800,
+	      ey: 400
+	    },
+	    {
+	      sx: 0, //start x
+	      sy: 400, //start y
+	      cx: 300, //control point x
+	      cy: 400, //control point y
+	      ex: 800, 
+	      ey: 380
+	    },
+	    {
+	      sx: 0, //start x
+	      sy: 410, //start y
+	      cx: 300, //control point x
+	      cy: 400, //control point y
+	      ex: 800, 
+	      ey: 370
+	    },
+	    {
+	      sx: 0, //start x
+	      sy: 430, //start y
+	      cx: 300, //control point x
+	      cy: 400, //control point y
+	      ex: 800, 
+	      ey: 360
+	    }
+	],
+
+	initCanvas: function() {
+		var canvas = document.getElementById('canvas');
+	    var clientW = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+	    var clientH = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+
+	    canvas.style.width = clientW - 5 + 'px';
+	    canvas.style.height = clientH - 5 + 'px';
+	    this.draw();
+	},
+	settings: {
+		isLeft: true
+	},
+
+	draw: function() {
+		if (canvas.getContext) {  
+			//console.log(this);  
+		    var ctx = canvas.getContext('2d');
+
+		    ctx.save();
+		    ctx.clearRect(0,0,800,600); // clear canvas
+		    ctx.save();
+		    // Quadratric curves example
+		      
+		    for(var i = 0; i < tide.lines.length; i++) {
+		    	//console.log(this);
+		        ctx.beginPath();
+		        ctx.moveTo(tide.lines[i].sx,tide.lines[i].sy); //starting point
+		        ctx.quadraticCurveTo(tide.lines[i].cx,tide.lines[i].cy,tide.lines[i].ex,tide.lines[i].ey);
+		         ctx.strokeStyle = '#ffffff';
+		        ctx.stroke();
+
+		        if(tide.settings.isLeft) {
+		          if(tide.lines[i].cx < 100) {
+		            tide.settings.isLeft = false;
+		          }
+		          tide.lines[i].cx = tide.lines[i].cx - 1;
+		        } else {
+		          if(tide.lines[i].cx > 600) {
+		            tide.settings.isLeft = true;
+		          }
+		          tide.lines[i].cx = tide.lines[i].cx + 1;
+		        }    
+		    }
+
+	      	ctx.restore();
+			window.requestAnimationFrame(tide.draw);
+		}
+	}
+}
+
 
 var art = {
 	init: function() {
 		binaryClock.runBinaryClock();
 		this.getWeather(); 
 		window.setInterval(this.getWeather, 600000); //600000 = 10 minutes
+		tide.initCanvas();
 	},
 
 	ui: {
