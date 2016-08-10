@@ -260,6 +260,7 @@ var flights = {
 			    ctx.moveTo(h,0);
 			    ctx.lineTo(yPos,0);
 			    ctx.lineTo(this.flights[i].locX,this.flights[i].locY);
+			    ctx.fillStyle = "rgba(255,0,255,0.5)";
 			    ctx.fill();
 			    this.flights[i].height -= 1;
 			    this.flights[i].locX -= 0.4;
