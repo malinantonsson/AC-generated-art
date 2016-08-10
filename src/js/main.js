@@ -182,12 +182,11 @@ var tide = {
 	],
 
 	initCanvas: function() {
-		var canvas = document.getElementById('canvas');
 	    var clientW = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 	    var clientH = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
 
-	    canvas.style.width = clientW - 5 + 'px';
-	    canvas.style.height = clientH - 5 + 'px';
+	    art.ui.canvas.style.width = clientW - 5 + 'px';
+	    art.ui.canvas.style.height = clientH - 5 + 'px';
 	    this.draw();
 	},
 	settings: {
@@ -195,12 +194,13 @@ var tide = {
 	},
 
 	draw: function() {
-		if (canvas.getContext) {  
+		if (art.ui.canvas.getContext) {  
 			//console.log(this);  
-		    var ctx = canvas.getContext('2d');
+		    var ctx = art.ui.canvas.getContext('2d');
 
 		    //ctx.save();
 		    ctx.clearRect(0,0,800,600); // clear canvas
+		    flights.draw();
 		    //ctx.save();
 		    // Quadratric curves example
 		      
@@ -231,6 +231,47 @@ var tide = {
 	}
 }
 
+var flights = {
+	flights: [
+		{
+			locX: 200,
+			locY: 400,
+			height: 2000
+		},
+		{
+			locX: 600,
+			locY: 600,
+			height: 5000
+		}
+	],
+	draw: function() {
+		var canvas = art.ui.canvas;
+		if (canvas.getContext) {  
+		    var ctx = canvas.getContext('2d');
+
+		    ctx.clearRect(0,0,800,600); // clear canvas
+
+		    for(var i = 0; i < this.flights.length; i++) {
+		    	var h = this.flights[i].height / 10;
+		    	var yPos = h / 2;
+		    	//console.log(yPos);
+		    	//console.log(h);
+			    ctx.beginPath();
+			    ctx.moveTo(h,0);
+			    ctx.lineTo(yPos,0);
+			    ctx.lineTo(this.flights[i].locX,this.flights[i].locY);
+			    ctx.fill();
+			    this.flights[i].height -= 1;
+			    this.flights[i].locX -= 0.4;
+			    this.flights[i].locY -= 0.4;
+			}
+		
+		}
+	}
+
+	
+}
+
 
 var art = {
 	init: function() {
@@ -241,11 +282,13 @@ var art = {
 		}
 		
 		tide.initCanvas();
+		flights.draw();
 	},
 
 	ui: {
 		body: document.getElementsByTagName('body')[0],
-		office: document.getElementsByClassName('icon--plus')[0]
+		office: document.getElementsByClassName('icon--plus')[0],
+		canvas: document.getElementById('canvas')
 	}, 
 
 	settings: {
