@@ -199,9 +199,9 @@ var tide = {
 			//console.log(this);  
 		    var ctx = canvas.getContext('2d');
 
-		    ctx.save();
+		    //ctx.save();
 		    ctx.clearRect(0,0,800,600); // clear canvas
-		    ctx.save();
+		    //ctx.save();
 		    // Quadratric curves example
 		      
 		    for(var i = 0; i < tide.lines.length; i++) {
@@ -209,7 +209,7 @@ var tide = {
 		        ctx.beginPath();
 		        ctx.moveTo(tide.lines[i].sx,tide.lines[i].sy); //starting point
 		        ctx.quadraticCurveTo(tide.lines[i].cx,tide.lines[i].cy,tide.lines[i].ex,tide.lines[i].ey);
-		         ctx.strokeStyle = 'rgba(255,255,255, 0.5)';
+		        ctx.strokeStyle = 'rgba(255,255,255, 0.5)';
 		        ctx.stroke();
 
 		        if(tide.settings.isLeft) {
@@ -225,7 +225,7 @@ var tide = {
 		        }    
 		    }
 
-	      	ctx.restore();
+	      	//ctx.restore();
 			window.requestAnimationFrame(tide.draw);
 		}
 	}
