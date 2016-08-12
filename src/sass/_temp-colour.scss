@@ -2,15 +2,15 @@
 	
 	.temp-#{$i} {
 		.binaryOffLimit { 
-			background-color: map-get($binary-clock, temp-#{$i}); 
+			background-color: darken(map-get($binary-clock, temp-#{$i}), 10%); 
 		}
 
 		.binaryOff { 
-			background-color: lighten(map-get($binary-clock, temp-#{$i}), 2%);
+			background-color: darken(map-get($binary-clock, temp-#{$i}), 5%);
 		}
 
 		.binaryOn {
-			background-color: lighten(map-get($binary-clock, temp-#{$i}), 5%);
+			background-color: map-get($binary-clock, temp-#{$i});
 		}
 	}
 }

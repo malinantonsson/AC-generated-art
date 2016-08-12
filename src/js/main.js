@@ -200,7 +200,7 @@ var tide = {
 
 		    //ctx.save();
 		    ctx.clearRect(0,0,800,600); // clear canvas
-		    flights.draw();
+		    //flights.draw();
 		    //ctx.save();
 		    // Quadratric curves example
 		      
@@ -273,6 +273,85 @@ var flights = {
 	
 }
 
+var marines = {
+	getInfo: function() {
+		var self = art;
+		if(self.settings.isDev) {
+			/*if(window.fetch) {
+				fetch(self.settings.marineApi, {
+					method: 'get'
+				})
+				.then(function(response) {
+					return response.json();
+				})
+				.then(function(weather) {
+					console.log(weather);
+					var temp = Math.round(weather.main.temp);
+					self.setColour(temp);
+
+					var windDeg = weather.wind.deg;
+					var windSpeed = weather.wind.speed;
+					self.setWind(windDeg, windSpeed);
+				});	
+
+			} else { *///if fetch is not supported, fallback to Ajax
+				$.ajax(self.settings.marineApi)
+				.done(function(response) {
+					console.log(response);
+				  	/*var temp = Math.round(response.main.temp);
+					self.setColour(temp);
+
+					var windDeg = response.wind.deg;
+					var windSpeed = response.wind.speed;
+					self.setWind(windDeg, windSpeed);*/
+					//TODO: wind
+				});
+			//}
+		} else {
+			if(window.fetch) {
+				fetch(self.settings.exampleData, {
+					method: 'get'
+				})
+				.then(function(response) {
+					return response.json();
+				})
+				.then(function(weather) {
+					console.log(weather);
+					var current_observation = weather.current_observation;
+					var temp = Math.round(current_observation.temp_c);
+					self.setColour(temp);
+
+					var windDeg = current_observation.wind_degrees;
+					var windSpeed = current_observation.wind_mph;
+					self.setWind(windDeg, windSpeed);
+					
+					if(self.settings.isChangeColour){
+						window.setInterval(self.devWeather, 2000);
+					}
+				});	
+
+			} else { //if fetch is not supported, fallback to Ajax
+				$.ajax(self.settings.exampleData)
+				.done(function(response) {
+				  	var current_observation = weather.current_observation;
+					var temp = Math.round(current_observation.temp_c);
+					self.setColour(temp);
+
+					var windDeg = current_observation.wind_degrees;
+					var windSpeed = current_observation.wind_mph;
+					self.setWind(windDeg, windSpeed);
+
+					//self.devWeather(temp);
+					if(self.settings.isChangeColour){
+						window.setInterval(self.devWeather, 2000);
+					}
+				});
+			}
+
+		}
+	}
+}
+
 
 var art = {
 	init: function() {
@@ -281,9 +360,11 @@ var art = {
 		if(!this.settings.isDev) {
 			window.setInterval(this.getWeather, 600000); //600000 = 10 minutes
 		}
+
+		//marines.getInfo();
 		
-		tide.initCanvas();
-		flights.draw();
+		//tide.initCanvas();
+		//flights.draw();
 	},
 
 	ui: {
@@ -294,7 +375,7 @@ var art = {
 
 	settings: {
 		isDev: true,
-		isChangeColour: false,
+		isChangeColour: true,
 		newWeatherAPi: 'http://api.wunderground.com/api/807d2301f79ea0f4/conditions/q/UK/London.json',
 		weatherApiKey: '807d2301f79ea0f4',
 		callWeatherAPI: false,
@@ -307,8 +388,8 @@ var art = {
 		LONmin: -0.13578,
 		LONmax: -0.05373,
 		marineApi: 'http://services.marinetraffic.com/api/exportvessels/643896879b28b84c3dcaa9e95e7ee645732ee4f4/MINLAT:51.4817/MAXLAT:51.51184/MINLON:-0.13578/MAXLON:-0.05373/timespan:10/protocol:json',
-		temp: 42,
-		tempDown: true 
+		temp: 0,
+		isDown: true 
 	},
 
 	devWeather: function() {
@@ -318,13 +399,17 @@ var art = {
 		if(art.settings.isDown) {
           if(art.settings.temp <= -10) {
             art.settings.isDown = false;
+            art.settings.temp = art.settings.temp + 1;
+          } else {
+          	art.settings.temp = art.settings.temp - 1;
           }
-          art.settings.temp = art.settings.temp - 1;
         } else {
-          if(art.settings.temp > 42) {
+          if(art.settings.temp > 41) {
             art.settings.isDown = true;
+            art.settings.temp = art.settings.temp - 1;
+          } else {
+          	art.settings.temp = art.settings.temp + 1;
           }
-          art.settings.temp = art.settings.temp + 1;
         } 
 
         art.setColour(art.settings.temp);
@@ -440,7 +525,7 @@ var art = {
 					var windSpeed = current_observation.wind_mph;
 					self.setWind(windDeg, windSpeed);
 
-					//self.devWeather(temp);
+					self.devWeather(temp);
 					if(self.settings.isChangeColour){
 						window.setInterval(self.devWeather, 2000);
 					}

@@ -1,8 +1,8 @@
 $binary-clock: (
 	default: (
-		offLimit: #ff0000,
-		on: lighten( #ff0000, 10% ),
-		off: lighten( #ff0000, 30% )
+		offLimit: #fff,
+		on: lighten( #fff, 10% ),
+		off: lighten( #fff, 30% )
 	),
 	temp--10: #000000,
 	temp--9: #FFFAFA,
