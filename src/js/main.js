@@ -375,7 +375,7 @@ var art = {
 
 	settings: {
 		isDev: true,
-		isChangeColour: true,
+		isChangeColour: false,
 		newWeatherAPi: 'http://api.wunderground.com/api/807d2301f79ea0f4/conditions/q/UK/London.json',
 		weatherApiKey: '807d2301f79ea0f4',
 		callWeatherAPI: false,
