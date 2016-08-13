@@ -279,13 +279,25 @@ var marines = {
 		LATmin: 51.4817,
 		LATmax: 51.51184,
 		LONmin: -0.13578,
-		LONmax: -0.05373
+		LONmax: -0.05373,
+		height: 51.51184 - 51.4817,
+		width: -0.13578 - -0.05373
+	},
+	ui: {
+		ships: {}
 	},
 
 	setPosition: function(ship) {
-		console.log(ship);
-		$(art.ui.shipsWrapper).append(ship.svg);
+		var lat = this.grid.LATmax - ship.y;
+		var lon = this.grid.LONmin - ship.x;
 
+		var y = (lat / this.grid.height) * 100;
+		var x = (lon / this.grid.width) * 100;
+		$(art.ui.shipsWrapper).append(ship.svg);
+		this.ui.ships[ship.id] = document.getElementById(ship.id);
+
+		this.ui.ships[ship.id].style.top = y + '%';
+		this.ui.ships[ship.id].style.left = x + '%';
 	},
 
 	getInfo: function() {
@@ -320,10 +332,9 @@ var marines = {
 					return response.json();
 				})
 				.then(function(marineData) {
-					console.log(marineData);
 					self.ships = {};
-
-					for(var i = 0; i < 1; i++) {
+					//marineData.length
+					for(var i = 0; i < marineData.length; i++) {
 						var id = marineData[i][0];
 						var y = marineData[i][1];
 						var x = marineData[i][2];
@@ -337,10 +348,7 @@ var marines = {
 						};
 
 						self.setPosition(self.ships[id]);
-
-						//console.log(this);
 					}
-					console.log(self);
 					
 				});	
 
