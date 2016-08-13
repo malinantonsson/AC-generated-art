@@ -9,6 +9,16 @@
 
 .icon--ship {
 	width: 7%;
-	position: absolute;
+	//position: absolute;
 	fill: rgba(255,255,255, 0.3);
+}
+
+.ship--info {
+	//position: absolute;
+	@include vertical-align(absolute);
+}
+
+.ship--wrapper {
+	position: absolute;
+	width: 100%;
 }

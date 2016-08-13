@@ -293,11 +293,16 @@ var marines = {
 
 		var y = (lat / this.grid.height) * 100;
 		var x = (lon / this.grid.width) * 100;
-		$(art.ui.shipsWrapper).append(ship.svg);
-		this.ui.ships[ship.id] = document.getElementById(ship.id);
 
-		this.ui.ships[ship.id].style.top = y + '%';
-		this.ui.ships[ship.id].style.left = x + '%';
+		var wrapper = document.createElement('div');
+		wrapper.id = ship.id + '-wrapper';
+		wrapper.className = 'ship--wrapper';
+		$(art.ui.shipsWrapper).append(wrapper);
+		wrapper.style.top = y + '%';
+		wrapper.style.left = x + '%';
+
+		$(wrapper).append(ship.svg);
+		$(wrapper).append('<span id="' + ship.id + '-info" class="ship--info">'+ ship.speed +'/' + ship.dir + ' </span>');
 	},
 
 	getInfo: function() {
@@ -333,17 +338,20 @@ var marines = {
 				})
 				.then(function(marineData) {
 					self.ships = {};
+					console.log(marineData);
 					//marineData.length
 					for(var i = 0; i < marineData.length; i++) {
 						var id = marineData[i][0];
 						var y = marineData[i][1];
 						var x = marineData[i][2];
 						var speed = marineData[i][3];
+						var dir = marineData[i][4];
 						self.ships[id] = {
 							id: id,
 							y: y,
 							x: x,
 							speed: speed,
+							dir: dir,
 							svg: '<svg id="' + id + '" version="1.1" class="icon icon--ship" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 284.889 182.111" xml:space="preserve" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"><polygon points="137.111,0.018 -0.111,182.111 284.889,182.111 "/></svg>'
 						};
 
