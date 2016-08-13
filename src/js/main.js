@@ -274,77 +274,80 @@ var flights = {
 }
 
 var marines = {
+	ships: {},
+	grid: {
+		LATmin: 51.4817,
+		LATmax: 51.51184,
+		LONmin: -0.13578,
+		LONmax: -0.05373
+	},
+
+	setPosition: function(ship) {
+		console.log(ship);
+		$(art.ui.shipsWrapper).append(ship.svg);
+
+	},
+
 	getInfo: function() {
-		var self = art;
-		if(self.settings.isDev) {
-			/*if(window.fetch) {
-				fetch(self.settings.marineApi, {
-					method: 'get'
-				})
-				.then(function(response) {
-					return response.json();
-				})
-				.then(function(weather) {
-					console.log(weather);
-					var temp = Math.round(weather.main.temp);
-					self.setColour(temp);
+		var self = this;
 
-					var windDeg = weather.wind.deg;
-					var windSpeed = weather.wind.speed;
-					self.setWind(windDeg, windSpeed);
-				});	
-
-			} else { *///if fetch is not supported, fallback to Ajax
-				$.ajax(self.settings.marineApi)
-				.done(function(response) {
-					console.log(response);
-				  	/*var temp = Math.round(response.main.temp);
-					self.setColour(temp);
-
-					var windDeg = response.wind.deg;
-					var windSpeed = response.wind.speed;
-					self.setWind(windDeg, windSpeed);*/
-					//TODO: wind
-				});
-			//}
-		} else {
+		//var self = art;
+		if(!art.settings.isDev) {
 			if(window.fetch) {
-				fetch(self.settings.exampleData, {
+				fetch(art.settings.marineApi, {
 					method: 'get'
 				})
 				.then(function(response) {
 					return response.json();
 				})
 				.then(function(weather) {
-					console.log(weather);
-					var current_observation = weather.current_observation;
-					var temp = Math.round(current_observation.temp_c);
-					self.setColour(temp);
-
-					var windDeg = current_observation.wind_degrees;
-					var windSpeed = current_observation.wind_mph;
-					self.setWind(windDeg, windSpeed);
 					
-					if(self.settings.isChangeColour){
-						window.setInterval(self.devWeather, 2000);
-					}
 				});	
 
 			} else { //if fetch is not supported, fallback to Ajax
-				$.ajax(self.settings.exampleData)
+				$.ajax(art.settings.marineApi)
 				.done(function(response) {
-				  	var current_observation = weather.current_observation;
-					var temp = Math.round(current_observation.temp_c);
-					self.setColour(temp);
+					console.log(response);
+				  
+				});
+			}
+		} else {
+			if(window.fetch) {
+				fetch(art.settings.exampleMarineData, {
+					method: 'get'
+				})
+				.then(function(response) {
+					return response.json();
+				})
+				.then(function(marineData) {
+					console.log(marineData);
+					self.ships = {};
 
-					var windDeg = current_observation.wind_degrees;
-					var windSpeed = current_observation.wind_mph;
-					self.setWind(windDeg, windSpeed);
+					for(var i = 0; i < 1; i++) {
+						var id = marineData[i][0];
+						var y = marineData[i][1];
+						var x = marineData[i][2];
+						var speed = marineData[i][3];
+						self.ships[id] = {
+							id: id,
+							y: y,
+							x: x,
+							speed: speed,
+							svg: '<svg id="' + id + '" version="1.1" class="icon icon--ship" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 284.889 182.111" xml:space="preserve" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"><polygon points="137.111,0.018 -0.111,182.111 284.889,182.111 "/></svg>'
+						};
 
-					//self.devWeather(temp);
-					if(self.settings.isChangeColour){
-						window.setInterval(self.devWeather, 2000);
+						self.setPosition(self.ships[id]);
+
+						//console.log(this);
 					}
+					console.log(self);
+					
+				});	
+
+			} else { //if fetch is not supported, fallback to Ajax
+				$.ajax(art.settings.exampleMarineData)
+				.done(function(response) {
+				  	
 				});
 			}
 
@@ -361,7 +364,10 @@ var art = {
 			window.setInterval(this.getWeather, 600000); //600000 = 10 minutes
 		}
 
-		//marines.getInfo();
+		this.moveOffice();
+		window.setInterval(this.moveOffice, 5000);
+
+		marines.getInfo();
 		
 		//tide.initCanvas();
 		//flights.draw();
@@ -370,7 +376,8 @@ var art = {
 	ui: {
 		body: document.getElementsByTagName('body')[0],
 		office: document.getElementsByClassName('icon--plus')[0],
-		canvas: document.getElementById('canvas')
+		canvas: document.getElementById('canvas'),
+		shipsWrapper: document.getElementsByClassName('ships')[0]
 	}, 
 
 	settings: {
@@ -383,13 +390,10 @@ var art = {
 		londonId: '2643743',
 		weatherApi: 'http://api.openweathermap.org/data/2.5/weather?q=London,uk&units=metric&APPID=807d2301f79ea0f4',
 		marineApiKey: '643896879b28b84c3dcaa9e95e7ee645732ee4f4',
-		LATmin: 51.4817,
-		LATmax: 51.51184,
-		LONmin: -0.13578,
-		LONmax: -0.05373,
-		marineApi: 'http://services.marinetraffic.com/api/exportvessels/643896879b28b84c3dcaa9e95e7ee645732ee4f4/MINLAT:51.4817/MAXLAT:51.51184/MINLON:-0.13578/MAXLON:-0.05373/timespan:10/protocol:json',
+		marineApi: 'http://services.marinetraffic.com/api/exportvessels/bff9c39f0b3c02e0a1fcdcac0882b8a41b0724ed/MINLAT:51.4817/MAXLAT:51.51184/MINLON:-0.13578/MAXLON:-0.05373/timespan:10/protocol:json',
 		temp: 0,
-		isDown: true 
+		isDown: true,
+		exampleMarineData: '../marine-example-1.json' 
 	},
 
 	devWeather: function() {
@@ -417,18 +421,14 @@ var art = {
 	},
 
 	moveOffice: function(x, y, speed) {
-		var top, left;
-		var office = this.ui.office;
-		var loc = office.getBoundingClientRect();
+		var office = art.ui.office;
 
-		top = loc.top;
-		left = loc.left;
+		function getRandomInt(min, max) {
+	      return Math.floor(Math.random() * (max - min)) + min;
+	    }
 
-		office.style.top = top + (speed * x); 
-		office.style.left = left + (speed * y); 
-
-		office.classList += ' has-moved';
-
+	    office.style.transform = 'scale(' + getRandomInt(0.5, 3.5) + ')';
+		office.style.opacity = Math.random();
 	},
 
 	setWind: function(deg, speed) {
