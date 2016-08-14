@@ -317,6 +317,58 @@ var marines = {
 	
 	},
 
+	handleShips: function(data) {
+		var self = marines;
+		//console.log('number of ships: ' + data.length);
+		var newShips = [];		
+		
+		for(var i = 0; i < data.length; i++) {
+			var id = data[i][0];
+			var y = data[i][1];
+			var x = data[i][2];
+			var speed = data[i][3];
+			var dir = data[i][5];
+			var ship = {
+				id: id,
+				y: y,
+				x: x,
+				speed: speed,
+				dir: dir,
+				svg: '<svg id="' + id + '" version="1.1" class="icon icon--ship" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 284.889 182.111" xml:space="preserve" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"><polygon points="137.111,0.018 -0.111,182.111 284.889,182.111 "/></svg>'
+			};
+
+			newShips.push(id);
+
+			if(self.currentDisplayedShips.indexOf(id) == -1) { //if it is a new ship, add to the list of current ships
+				self.currentDisplayedShips.push(id);
+				ship.isNew = true;
+			} else {
+				ship.isNew = false;
+			}
+
+			self.setPosition(ship);
+		}
+
+		var shipsToBeRemoved = [];
+
+		if(newShips.length > 0 ) {
+			//check if the currently listed ships exsists in the new data (ie they are within the grid)
+			for (var i = 0; i < self.currentDisplayedShips.length; i++) {
+				if(newShips.indexOf(self.currentDisplayedShips[i]) === -1) {
+					shipsToBeRemoved.push(i);				
+				}
+			}
+
+			if(shipsToBeRemoved.length > 0) { //remove ships that are no longer within the grid
+				for(var r = shipsToBeRemoved.length - 1; r >= 0; r--) { //count downwards to not mess with index
+					$('#' + self.currentDisplayedShips[shipsToBeRemoved[r]] + '-wrapper').remove();
+					self.currentDisplayedShips.splice(shipsToBeRemoved[r], 1);
+				}
+			}
+			//console.log('current ships after: ' + self.currentDisplayedShips.length);
+		}
+	},
+
 	getInfo: function() {
 		var self = marines;
 
@@ -348,89 +400,14 @@ var marines = {
 				.then(function(response) {
 					return response.json();
 				})
-				.then(function(marineData) {
-					//console.log('number of ships: ' + marineData.length);
-					var newShips = [];		
-					
-					for(var i = 0; i < marineData.length; i++) {
-						var id = marineData[i][0];
-						var y = marineData[i][1];
-						var x = marineData[i][2];
-						var speed = marineData[i][3];
-						var dir = marineData[i][5];
-						var ship = {
-							id: id,
-							y: y,
-							x: x,
-							speed: speed,
-							dir: dir,
-							svg: '<svg id="' + id + '" version="1.1" class="icon icon--ship" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 284.889 182.111" xml:space="preserve" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"><polygon points="137.111,0.018 -0.111,182.111 284.889,182.111 "/></svg>'
-						};
-
-						newShips.push(id);
-
-						if(self.currentDisplayedShips.indexOf(id) == -1) { //if it is a new ship, add to the list of current ships
-							self.currentDisplayedShips.push(id);
-							ship.isNew = true;
-						} else {
-							ship.isNew = false;
-						}
-
-						self.setPosition(ship);
-					}
-
-					var shipsToBeRemoved = [];
-
-					if(newShips.length > 0 ) {
-						//check if the currently listed ships exsists in the new data (ie they are within the grid)
-						for (var i = 0; i < self.currentDisplayedShips.length; i++) {
-							if(newShips.indexOf(self.currentDisplayedShips[i]) === -1) {
-								shipsToBeRemoved.push(i);				
-							}
-						}
-
-						if(shipsToBeRemoved.length > 0) { //remove ships that are no longer within the grid
-							for(var r = shipsToBeRemoved.length - 1; r >= 0; r--) { //count downwards to not mess with index
-								$('#' + self.currentDisplayedShips[shipsToBeRemoved[r]] + '-wrapper').remove();
-								self.currentDisplayedShips.splice(shipsToBeRemoved[r], 1);
-							}
-						}
-						//console.log('current ships after: ' + self.currentDisplayedShips.length);
-					}
-					
-				});	
+				.then(self.handleShips);	
 
 			} else { //if fetch is not supported, fallback to Ajax
-				$.ajax(art.settings.exampleMarineData)
-				.done(function(response) {
-					self.ships = {};
-					
-					for(var i = 0; i < response.length; i++) {
-						var id = response[i][0];
-						var y = response[i][1];
-						var x = response[i][2];
-						var speed = response[i][3];
-						var dir = response[i][5];
-						self.ships[id] = {
-							id: id,
-							y: y,
-							x: x,
-							speed: speed,
-							dir: dir,
-							svg: '<svg id="' + id + '" version="1.1" class="icon icon--ship" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 284.889 182.111" xml:space="preserve" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"><polygon points="137.111,0.018 -0.111,182.111 284.889,182.111 "/></svg>'
-						};
-
-						self.setPosition(self.ships[id]);
-					}
-				  	
-				});
+				console.log('using ajax');
+				$.ajax('../marine-example-' + art.settings.marineIndex + '.json')
+				.done(self.handleShips);
 			}
-
-			/*if(art.settings.marineIndex === 3) {
-				return;
-			} else {
-				art.settings.marineIndex++;
-			}*/
+			
 			art.settings.marineIndex === 3 ? art.settings.marineIndex = 1 : art.settings.marineIndex++;
 
 		}
