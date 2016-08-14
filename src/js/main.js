@@ -295,38 +295,27 @@ var marines = {
 
 		var y = (lat / this.grid.height) * 100;
 		var x = (lon / this.grid.width) * 100;
-		//console.log('ship: ' + marines.ui.ships[ship.id]);
 		//
 		if(ship.isNew) {
-		//if(!marines.ui.ships[ship.id]) {
-			//console.log('setting pos: new ship');
-			marines.ui.ships[ship.id] = ship;
 
 			var wrapper = document.createElement('div');
 			wrapper.id = ship.id + '-wrapper';
 			wrapper.className = 'ship--wrapper';
 			art.ui.shipsWrapper.appendChild(wrapper);
 			
-			//marines.currentShips.push(ship.id); //add to list of ships
 
 			wrapper.style.top = y + '%';
 			wrapper.style.left = x + '%';
 
 		} else {
-			//console.log('setting pos: old ship');
-			//console.log('ship id: ' + marines.ui.ships[ship.id].id);
 			var wrapper = document.getElementById(ship.id + '-wrapper');
-			//if(wrapper != null || wrapper != undefined) {
+			if(wrapper != null || wrapper != undefined) {
 				wrapper.style.top = y + '%';
 				wrapper.style.left = x + '%';
-			//}
-			//console.log(wrapper);
-			
+			}
 
-			//console.log(wrapper);
 		}
 		
-		var currentShip = marines.ui.ships[ship.id];
 		$(wrapper).append();
 		$(wrapper).html(ship.svg + '<span id="' + ship.id + '-info" class="ship--info">'+ ship.y + '/'+ ship.x + '/'+ ship.speed + '/' + ship.dir + ' </span>');
 	
@@ -365,23 +354,7 @@ var marines = {
 				})
 				.then(function(marineData) {
 					console.log('number of ships: ' + marineData.length);
-
-					/*if(self.newData.length > 0 ) {
-						for (var i = 0; i < self.ui.shipsWrapper.length; i++) {
-							//console.log('checking if old ship exist in new data: ' + marines.currentShips[i]);
-							if(self.newData.indexOf(marines.currentShips[i]) > -1) {
-								//console.log('Yep. got it');						
-							} else {
-								//console.log('nope, id: ' + marines.currentShips[i]);
-								//var el = document.getElementById(marines.currentShips[i] + '-wrapper');
-								$('#' + marines.currentShips[i] + '-wrapper').remove();
-								//console.log('removed ship: ' + marines.ui.ships[i]);
-								delete marines.ui.ships[i];
-							}
-						}
-					}*/
-					self.newData = [];
-					
+					self.newData = [];			
 					self.ships = {};
 					
 					for(var i = 0; i < marineData.length; i++) {
@@ -406,48 +379,26 @@ var marines = {
 							self.ships[id].isNew = true;
 						} else {
 							self.ships[id].isNew = false;
-							//console.log(self.currentShips.indexOf(id));
 						}
 
 						self.setPosition(self.ships[id]);
 					}
-					//console.log(self.newData.length);
+
 					var removes = [];
 
 					if(self.newData.length > 0 ) {
-						//console.log('current ships before: ' + self.currentShips.length);
 						for (var i = 0; i < self.currentShips.length; i++) {
-							//console.log(i + ': ' + self.currentShips[i]);
-							//console.log(marines.currentShips[i]);
-							//console.log('checking if old ship exist in new data: ' + marines.currentShips[i]);
 							if(self.newData.indexOf(self.currentShips[i]) === -1) {
-								removes.push(i);
-								//console.log(self.newData.indexOf(self.currentShips[i]) + ': ' + self.currentShips[i]);
-								//console.log(self.newData.indexOf(self.currentShips[i]));						
-							} else {
-								//removes.push(i);
-								//console.log(i);
-								//console.log('removing: ' + self.newData.indexOf(self.currentShips[i]));
-								//self.currentShips.splice(i, 1);
-								//console.log('nope, id: ' + marines.currentShips[i]);
-								//var el = document.getElementById(marines.currentShips[i] + '-wrapper');
-								//$('#' + marines.currentShips[i] + '-wrapper').remove();
-								//console.log('removed ship: ' + marines.ui.ships[i]);
-								//delete marines.ui.ships[i];
+								removes.push(i);				
 							}
 						}
 
 						if(removes.length > 0) {
 							for(var r = removes.length - 1; r >= 0; r--) {
-								//console.log(removes[r]);
-								//console.log($('#' + self.currentShips[removes[r]] + '-wrapper'));
 								$('#' + self.currentShips[removes[r]] + '-wrapper').remove();
 								self.currentShips.splice(removes[r], 1);
 							}
 						}
-						//console.log('removes: ' + removes.length);
-						//console.log('current ships after: ' + self.currentShips + 'length: ' + self.currentShips.length);
-						//console.log('New data ships after: ' + self.newData + 'length: ' + self.newData.length);
 						console.log('current ships after: ' + self.currentShips.length);
 					}
 					
