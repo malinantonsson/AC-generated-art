@@ -9,7 +9,6 @@
 
 .icon--ship {
 	width: 7%;
-	//position: absolute;
 	fill: rgba(255,255,255, 0.3);
 }
 
@@ -21,4 +20,6 @@
 .ship--wrapper {
 	position: absolute;
 	width: 100%;
+	transition-property: left, top;
+	transition-duration: 300ms;
 }

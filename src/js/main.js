@@ -282,12 +282,8 @@ var marines = {
 		height: 51.51184 - 51.4817,
 		width: -0.13578 - -0.05373
 	},
-	ui: {
-		ships: {},
-		shipsWrapper: []
-	},
-	currentShips: [],
-	newData: [],
+	currentDisplayedShips: [],
+	newShips: [],
 
 	setPosition: function(ship) {
 		var lat = this.grid.LATmax - ship.y;
@@ -295,7 +291,7 @@ var marines = {
 
 		var y = (lat / this.grid.height) * 100;
 		var x = (lon / this.grid.width) * 100;
-		//
+		
 		if(ship.isNew) {
 
 			var wrapper = document.createElement('div');
@@ -353,9 +349,8 @@ var marines = {
 					return response.json();
 				})
 				.then(function(marineData) {
-					console.log('number of ships: ' + marineData.length);
-					self.newData = [];			
-					self.ships = {};
+					//console.log('number of ships: ' + marineData.length);
+					var newShips = [];		
 					
 					for(var i = 0; i < marineData.length; i++) {
 						var id = marineData[i][0];
@@ -363,7 +358,7 @@ var marines = {
 						var x = marineData[i][2];
 						var speed = marineData[i][3];
 						var dir = marineData[i][5];
-						self.ships[id] = {
+						var ship = {
 							id: id,
 							y: y,
 							x: x,
@@ -372,34 +367,35 @@ var marines = {
 							svg: '<svg id="' + id + '" version="1.1" class="icon icon--ship" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 284.889 182.111" xml:space="preserve" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"><polygon points="137.111,0.018 -0.111,182.111 284.889,182.111 "/></svg>'
 						};
 
-						self.newData.push(id);
+						newShips.push(id);
 
-						if(self.currentShips.indexOf(id) == -1) { //if it is a new ship, add to the list of current ships
-							self.currentShips.push(id);
-							self.ships[id].isNew = true;
+						if(self.currentDisplayedShips.indexOf(id) == -1) { //if it is a new ship, add to the list of current ships
+							self.currentDisplayedShips.push(id);
+							ship.isNew = true;
 						} else {
-							self.ships[id].isNew = false;
+							ship.isNew = false;
 						}
 
-						self.setPosition(self.ships[id]);
+						self.setPosition(ship);
 					}
 
-					var removes = [];
+					var shipsToBeRemoved = [];
 
-					if(self.newData.length > 0 ) {
-						for (var i = 0; i < self.currentShips.length; i++) {
-							if(self.newData.indexOf(self.currentShips[i]) === -1) {
-								removes.push(i);				
+					if(newShips.length > 0 ) {
+						//check if the currently listed ships exsists in the new data (ie they are within the grid)
+						for (var i = 0; i < self.currentDisplayedShips.length; i++) {
+							if(newShips.indexOf(self.currentDisplayedShips[i]) === -1) {
+								shipsToBeRemoved.push(i);				
 							}
 						}
 
-						if(removes.length > 0) {
-							for(var r = removes.length - 1; r >= 0; r--) {
-								$('#' + self.currentShips[removes[r]] + '-wrapper').remove();
-								self.currentShips.splice(removes[r], 1);
+						if(shipsToBeRemoved.length > 0) { //remove ships that are no longer within the grid
+							for(var r = shipsToBeRemoved.length - 1; r >= 0; r--) { //count downwards to not mess with index
+								$('#' + self.currentDisplayedShips[shipsToBeRemoved[r]] + '-wrapper').remove();
+								self.currentDisplayedShips.splice(shipsToBeRemoved[r], 1);
 							}
 						}
-						console.log('current ships after: ' + self.currentShips.length);
+						//console.log('current ships after: ' + self.currentDisplayedShips.length);
 					}
 					
 				});	
