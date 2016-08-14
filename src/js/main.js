@@ -274,7 +274,6 @@ var flights = {
 }
 
 var marines = {
-	ships: {},
 	grid: {
 		LATmin: 51.4817,
 		LATmax: 51.51184,
@@ -284,8 +283,11 @@ var marines = {
 		width: -0.13578 - -0.05373
 	},
 	ui: {
-		ships: {}
+		ships: {},
+		shipsWrapper: []
 	},
+	currentShips: [],
+	newData: [],
 
 	setPosition: function(ship) {
 		var lat = this.grid.LATmax - ship.y;
@@ -293,20 +295,44 @@ var marines = {
 
 		var y = (lat / this.grid.height) * 100;
 		var x = (lon / this.grid.width) * 100;
+		//console.log('ship: ' + marines.ui.ships[ship.id]);
 
-		var wrapper = document.createElement('div');
-		wrapper.id = ship.id + '-wrapper';
-		wrapper.className = 'ship--wrapper';
-		$(art.ui.shipsWrapper).append(wrapper);
-		wrapper.style.top = y + '%';
-		wrapper.style.left = x + '%';
+		if(!marines.ui.ships[ship.id]) {
+			//console.log('setting pos: new ship');
+			marines.ui.ships[ship.id] = ship;
 
-		$(wrapper).append(ship.svg);
-		$(wrapper).append('<span id="' + ship.id + '-info" class="ship--info">'+ ship.speed +'/' + ship.dir + ' </span>');
+			/*var wrapper = document.createElement('div');
+			wrapper.id = ship.id + '-wrapper';
+			wrapper.className = 'ship--wrapper';
+			art.ui.shipsWrapper.appendChild(wrapper);
+			
+			marines.currentShips.push(ship.id); //add to list of ships
+
+			wrapper.style.top = y + '%';
+			wrapper.style.left = x + '%';*/
+
+		} else {
+			//console.log('setting pos: old ship');
+			//console.log('ship id: ' + marines.ui.ships[ship.id].id);
+			/*var wrapper = document.getElementById(ship.id + '-wrapper');
+			if(wrapper != null || wrapper != undefined) {
+				wrapper.style.top = y + '%';
+				wrapper.style.left = x + '%';
+			}*/
+			//console.log(wrapper);
+			
+
+			//console.log(wrapper);
+		}
+		
+		var currentShip = marines.ui.ships[ship.id];
+		//$(wrapper).append();
+		//$(wrapper).html(ship.svg + '<span id="' + ship.id + '-info" class="ship--info">'+ ship.y + '/'+ ship.x + '/'+ ship.speed + '/' + ship.dir + ' </span>');
+	
 	},
 
 	getInfo: function() {
-		var self = this;
+		var self = marines;
 
 		//var self = art;
 		if(!art.settings.isDev) {
@@ -330,22 +356,108 @@ var marines = {
 			}
 		} else {
 			if(window.fetch) {
-				fetch(art.settings.exampleMarineData, {
+				fetch('../marine-example-' + art.settings.marineIndex + '.json', {
 					method: 'get'
 				})
 				.then(function(response) {
 					return response.json();
 				})
 				.then(function(marineData) {
+					console.log('number of ships: ' + marineData.length);
+
+					/*if(self.newData.length > 0 ) {
+						for (var i = 0; i < self.ui.shipsWrapper.length; i++) {
+							//console.log('checking if old ship exist in new data: ' + marines.currentShips[i]);
+							if(self.newData.indexOf(marines.currentShips[i]) > -1) {
+								//console.log('Yep. got it');						
+							} else {
+								//console.log('nope, id: ' + marines.currentShips[i]);
+								//var el = document.getElementById(marines.currentShips[i] + '-wrapper');
+								$('#' + marines.currentShips[i] + '-wrapper').remove();
+								//console.log('removed ship: ' + marines.ui.ships[i]);
+								delete marines.ui.ships[i];
+							}
+						}
+					}*/
+					self.newData = [];
+					
 					self.ships = {};
-					console.log(marineData);
-					//marineData.length
+					
 					for(var i = 0; i < marineData.length; i++) {
 						var id = marineData[i][0];
 						var y = marineData[i][1];
 						var x = marineData[i][2];
 						var speed = marineData[i][3];
-						var dir = marineData[i][4];
+						var dir = marineData[i][5];
+						self.ships[id] = {
+							id: id,
+							y: y,
+							x: x,
+							speed: speed,
+							dir: dir,
+							svg: '<svg id="' + id + '" version="1.1" class="icon icon--ship" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 284.889 182.111" xml:space="preserve" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"><polygon points="137.111,0.018 -0.111,182.111 284.889,182.111 "/></svg>'
+						};
+
+						self.newData.push(id);
+
+						if(self.currentShips.indexOf(id) == -1) { //if it is a new ship, add to the list of current ships
+							self.currentShips.push(id);
+						} else {
+							//console.log(self.currentShips.indexOf(id));
+						}
+
+						//self.setPosition(self.ships[id]);
+					}
+					//console.log(self.newData.length);
+					var removes = [];
+
+					if(self.newData.length > 0 ) {
+						console.log('current ships before: ' + self.currentShips.length);
+						for (var i = 0; i < self.currentShips.length; i++) {
+							//console.log(i + ': ' + self.currentShips[i]);
+							//console.log(marines.currentShips[i]);
+							//console.log('checking if old ship exist in new data: ' + marines.currentShips[i]);
+							if(self.newData.indexOf(self.currentShips[i]) > -1) {
+								console.log(self.newData.indexOf(self.currentShips[i]) + ': ' + self.currentShips[i]);
+								//console.log(self.newData.indexOf(self.currentShips[i]));						
+							} else {
+								removes.push(i);
+								//console.log(i);
+								//console.log('removing: ' + self.newData.indexOf(self.currentShips[i]));
+								//self.currentShips.splice(i, 1);
+								//console.log('nope, id: ' + marines.currentShips[i]);
+								//var el = document.getElementById(marines.currentShips[i] + '-wrapper');
+								//$('#' + marines.currentShips[i] + '-wrapper').remove();
+								//console.log('removed ship: ' + marines.ui.ships[i]);
+								//delete marines.ui.ships[i];
+							}
+						}
+
+						if(removes.length > 0) {
+							for(var r = removes.length; r > 0; r--) {
+								console.log(r);
+								self.currentShips.splice(removes[r], 1);
+							}
+						}
+						console.log('removes: ' + removes.length);
+						//console.log('current ships after: ' + self.currentShips + 'length: ' + self.currentShips.length);
+						//console.log('New data ships after: ' + self.newData + 'length: ' + self.newData.length);
+						console.log('current ships after: ' + self.currentShips.length);
+					}
+					
+				});	
+
+			} else { //if fetch is not supported, fallback to Ajax
+				$.ajax(art.settings.exampleMarineData)
+				.done(function(response) {
+					self.ships = {};
+					
+					for(var i = 0; i < response.length; i++) {
+						var id = response[i][0];
+						var y = response[i][1];
+						var x = response[i][2];
+						var speed = response[i][3];
+						var dir = response[i][5];
 						self.ships[id] = {
 							id: id,
 							y: y,
@@ -357,15 +469,16 @@ var marines = {
 
 						self.setPosition(self.ships[id]);
 					}
-					
-				});	
-
-			} else { //if fetch is not supported, fallback to Ajax
-				$.ajax(art.settings.exampleMarineData)
-				.done(function(response) {
 				  	
 				});
 			}
+
+			/*if(art.settings.marineIndex === 3) {
+				return;
+			} else {
+				art.settings.marineIndex++;
+			}*/
+			art.settings.marineIndex === 3 ? art.settings.marineIndex = 1 : art.settings.marineIndex++;
 
 		}
 	}
@@ -376,14 +489,19 @@ var art = {
 	init: function() {
 		binaryClock.runBinaryClock();
 		this.getWeather(); 
+		marines.getInfo();
 		if(!this.settings.isDev) {
 			window.setInterval(this.getWeather, 600000); //600000 = 10 minutes
+
+		}
+		if(this.settings.isDev) {
+			window.setInterval(marines.getInfo, 5000);
 		}
 
 		this.moveOffice();
 		window.setInterval(this.moveOffice, 5000);
 
-		marines.getInfo();
+		
 		
 		//tide.initCanvas();
 		//flights.draw();
@@ -397,6 +515,7 @@ var art = {
 	}, 
 
 	settings: {
+		marineIndex: 1, //dev tool
 		isDev: true,
 		isChangeColour: false,
 		newWeatherAPi: 'http://api.wunderground.com/api/807d2301f79ea0f4/conditions/q/UK/London.json',
