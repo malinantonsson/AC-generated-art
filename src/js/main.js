@@ -327,7 +327,7 @@ var marines = {
 			var y = data[i][1];
 			var x = data[i][2];
 			var speed = data[i][3];
-			var dir = data[i][5];
+			var dir = data[i][4];
 			var ship = {
 				id: id,
 				y: y,
@@ -407,7 +407,7 @@ var marines = {
 				$.ajax('../marine-example-' + art.settings.marineIndex + '.json')
 				.done(self.handleShips);
 			}
-			
+
 			art.settings.marineIndex === 3 ? art.settings.marineIndex = 1 : art.settings.marineIndex++;
 
 		}
