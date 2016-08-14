@@ -62,6 +62,14 @@ gulp.task('styles', function() {
     }));
 });
 
+gulp.task('fonts', function () {
+    return  gulp.src( appPath + '/fonts/*.ttf' )
+        .pipe(gulp.dest( 'dist/css/fonts' ))
+        .pipe(browserSync.reload({
+          stream: true
+        }));
+});
+
 
 gulp.task('pages', function () {
     return  gulp.src( appPath + '/*.html' )
@@ -156,6 +164,7 @@ gulp.task('default', ['clean'], function (cb) {
       'pages',
       'json',
       'styles',
+      'fonts',
       'scripts',
       'images',
     ], cb);
