@@ -347,7 +347,7 @@ var tide = {
 	},
 
 	draw: function() {
-		var speed = .5;
+		var speed = 1 * Math.random();
 		if (art.ui.canvas.getContext) {  
 		    var ctx = art.ui.canvas.getContext('2d');
 
@@ -360,75 +360,36 @@ var tide = {
 		        ctx.strokeStyle = 'rgba(255,255,255, 0.5)';
 		        ctx.stroke();
 
-
-		        //MOVES CONTROL POINTS FROM RIGHT TO LEFT
-		       /* if(tide.settings.isLeft) {
-		          if(tide.lines[i].cx < 100) {
-		            tide.settings.isLeft = false;
-		          }
-		          tide.lines[i].cx = tide.lines[i].cx - 2;
-		        } else {
-		          if(tide.lines[i].cx > 600) {
-		            tide.settings.isLeft = true;
-		          }
-		          tide.lines[i].cx = tide.lines[i].cx + 2;
-		        } */
-
-
-
-
-		        /* if(tide.settings.isUp) {
-		          if(tide.lines[i].ey < 100) {
-		            tide.settings.isUp = false;
-		          }*/
-		          //tide.lines[i].ey = tide.lines[i].ey - 1;
-		        //} else {
-		        //
-		        //MOVES right side DOWN
-		        
-		        //if(tide.settings.isUp) {
-		        //
 		        //*******THIS KIND OF LOOKS GOOD
 		          	if( (tide.lines[i].ey > 0 && tide.lines[i].ey < 600 )) {
-		          		console.log(tide.lines[i].ey);
+		          		//console.log(tide.lines[i].ey);
 		            	tide.settings.isUp = false;
 		            	tide.lines[i].ey = tide.lines[i].ey + speed;
 			          	tide.lines[i].cy = tide.lines[i].cy + speed;
 			          	tide.lines[i].cx = tide.lines[i].cx - speed;
 		          	}
 
-		          	if( tide.lines[i].ey > 500 && tide.lines[i].ex > 300) {
+		          	if( tide.lines[i].ey > 500 && tide.lines[i].ex > 400) {
 		          		tide.lines[i].ex = tide.lines[i].ex - speed;
-			          	tide.lines[i].cy = tide.lines[i].cy + speed;
-			          	tide.lines[i].cx = tide.lines[i].cx - speed;
+			          	tide.lines[i].cy = tide.lines[i].cy - speed * 2;
+			          	tide.lines[i].cx = tide.lines[i].cx + speed * 2;
 		          	}
 
-		          	/*tide.lines[i].ey = tide.lines[i].ey + speed;
-		          	tide.lines[i].cy = tide.lines[i].cy + speed;
-		          	tide.lines[i].cx = tide.lines[i].cx - speed;*/
 		         //******* END THIS KIND OF LOOKS GOOD
 		         //
 		         //
-		          	//tide.lines[i].ex = tide.lines[i].ex + 1;
-		        /*} else {
-					if( (tide.lines[i].ey < 400)) {
-						tide.settings.isUp = true;
-					}
-					tide.lines[i].ey = tide.lines[i].ey - speed;
-					tide.lines[i].cy = tide.lines[i].cy + speed * 2;
-		          	tide.lines[i].cx = tide.lines[i].cx - speed;
-		          	//tide.lines[i].ex = tide.lines[i].ex - 1;
-		        }*/
+		         if( (tide.lines[i].sy > 0 && tide.lines[i].sy < 600 )) {
+	          		//console.log(tide.lines[i].sy);
+	            	tide.settings.isUp = false;
+	            	tide.lines[i].sy = tide.lines[i].sy - speed;
+	          	}
 
-		          /*if(tide.lines[i].sy > 100) {
-		            //tide.settings.isUp = true;
-		          	tide.lines[i].sy = tide.lines[i].sy - 1;
-		          	tide.lines[i].sx = tide.lines[i].sx + Math.random();
-		          }*/
-		        //}   
-
-		        /*tide.lines[i].ex = tide.lines[i].ex + 1; //moves right down
-		        tide.lines[i].ey = tide.lines[i].ey - 1;*/
+	          	if( tide.lines[i].sy > 200 && tide.lines[i].sx > 0) {
+	          		tide.lines[i].sx = tide.lines[i].sx - speed;
+	          		tide.lines[i].sy = tide.lines[i].sy - speed;
+	          	}
+		         
+		       
 		    }
 
 	      	//ctx.restore();
