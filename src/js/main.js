@@ -43,13 +43,13 @@ var binaryClock = {
 var tide = {
 	//16 lines
 	lines:[
-	    {
+	    /*{
 	      sx: 0, //start x
 	      sy: 250, //start y
 	      cx: 300, //control point x
 	      cy: 500, //control point y
 	      ex: 800,
-	      ey: 450
+	      ey: 200
 	    },
 	    {
 	      sx: 0, //start x
@@ -57,7 +57,7 @@ var tide = {
 	      cx: 300, //control point x
 	      cy: 500, //control point y
 	      ex: 800,
-	      ey: 400
+	      ey: 190
 	    },
 	    {
 	      sx: 0, //start x
@@ -65,7 +65,7 @@ var tide = {
 	      cx: 300, //control point x
 	      cy: 500, //control point y
 	      ex: 800,
-	      ey: 350
+	      ey: 180
 	    },
 	    {
 	      sx: 0, //start x
@@ -73,7 +73,7 @@ var tide = {
 	      cx: 300, //control point x
 	      cy: 500, //control point y
 	      ex: 800,
-	      ey: 300
+	      ey: 170
 	    },
 	    {
 	      sx: 0, //start x
@@ -81,7 +81,7 @@ var tide = {
 	      cx: 300, //control point x
 	      cy: 500, //control point y
 	      ex: 800,
-	      ey: 260
+	      ey: 160
 	    },
 	    {
 	      sx: 0, //start x
@@ -89,7 +89,7 @@ var tide = {
 	      cx: 300, //control point x
 	      cy: 500, //control point y
 	      ex: 800, 
-	      ey: 220
+	      ey: 150
 	    },
 	    {
 	      sx: 0, //start x
@@ -97,7 +97,7 @@ var tide = {
 	      cx: 300, //control point x
 	      cy: 500, //control point y
 	      ex: 800, 
-	      ey: 190
+	      ey: 140
 	    },
 	    {
 	      sx: 0, //start x
@@ -105,15 +105,7 @@ var tide = {
 	      cx: 300, //control point x
 	      cy: 500, //control point y
 	      ex: 800, 
-	      ey: 160
-	    },
-	    {
-	      sx: 0, //start x
-	      sy: 450, //start y
-	      cx: 300, //control point x
-	      cy: 500, //control point y
-	      ex: 800, 
-	      ey: 140
+	      ey: 130
 	    },
 	    {
 	      sx: 0, //start x
@@ -122,62 +114,222 @@ var tide = {
 	      cy: 500, //control point y
 	      ex: 800, 
 	      ey: 120
-	    },
-	    {
-	      sx: 0, //start x
-	      sy: 470, //start y
-	      cx: 300, //control point x
-	      cy: 500, //control point y
+	    },*/
+
+
+	    /*{
+	      sx: 350, //start x
+	      sy: 600, //start y
+	      cx: 350, //control point x
+	      cy: 600, //control point y
 	      ex: 800, 
-	      ey: 90
+	      ey: 130
 	    },
 	    {
-	      sx: 0, //start x
-	      sy: 490, //start y
+	      sx: 400, //start x
+	      sy: 600, //start y
+	      cx: 400, //control point x
+	      cy: 600, //control point y
+	      ex: 800, 
+	      ey: 100
+	    },
+
+
+
+
+	    {
+	      sx: 100, //start x
+	      sy: 500, //start y
+	      cx: 300, //control point x
+	      cy: 400, //control point y
+	      ex: 800, 
+	      ey: 200
+	    },
+	    {
+	      sx: 150, //start x
+	      sy: 550, //start y
+	      cx: 300, //control point x
+	      cy: 450, //control point y
+	      ex: 800, 
+	      ey: 250
+	    },
+	    {
+	      sx: 200, //start x
+	      sy: 570, //start y
 	      cx: 300, //control point x
 	      cy: 500, //control point y
 	      ex: 800, 
 	      ey: 60
 	    },
 	    {
-	      sx: 0, //start x
-	      sy: 520, //start y
+	      sx: 250, //start x
+	      sy: 590, //start y
 	      cx: 300, //control point x
+	      cy: 520, //control point y
+	      ex: 800, 
+	      ey: 50
+	    },
+	    {
+	      sx: 300, //start x
+	      sy: 800, //start y
+	      cx: 500, //control point x
 	      cy: 500, //control point y
 	      ex: 800, 
 	      ey: 30
+	    },*/
+
+	    {
+	      sx: 190, //start x //13th line from top right
+	      sy: 280, //start y
+
+	      cx: 680, //control point x
+	      cy: 160, //control point y
+	      
+	      ex: 800, 
+	      ey: 300
+	    },
+
+
+	    {
+	      sx: 150, //start x //13th line from top right
+	      sy: 330, //start y
+
+	      cx: 670, //control point x
+	      cy: 160, //control point y
+	      
+	      ex: 800, 
+	      ey: 270
+	    },
+
+	    {
+	      sx: 100, //start x //12th line from top right
+	      sy: 400, //start y
+
+	      cx: 670, //control point x
+	      cy: 160, //control point y
+	      
+	      ex: 800, 
+	      ey: 250
+	    },
+
+	    {
+	      sx: 50, //start x //11th line from top right
+	      sy: 500, //start y
+
+	      cx: 680, //control point x
+	      cy: 150, //control point y
+	      
+	      ex: 800, 
+	      ey: 230
+	    },
+
+	    {
+	      sx: 20, //start x //10th line from top right
+	      sy: 580, //start y
+
+	      cx: 680, //control point x
+	      cy: 150, //control point y
+	      
+	      ex: 800, 
+	      ey: 210
+	    },
+
+	    {
+	      sx: 50, //start x //9th line from top right
+	      sy: 600, //start y
+
+	      cx: 660, //control point x
+	      cy: 170, //control point y
+	      
+	      ex: 800, 
+	      ey: 190
+	    },
+
+	    {
+	      sx: 120, //start x //8th line from top right
+	      sy: 600, //start y
+
+	      cx: 670, //control point x
+	      cy: 180, //control point y
+	      
+	      ex: 800, 
+	      ey: 170
+	    },
+
+	    {
+	      sx: 200, //start x //7th line from top right
+	      sy: 600, //start y
+
+	      cx: 670, //control point x
+	      cy: 190, //control point y
+	      
+	      ex: 800, 
+	      ey: 150
+	    },
+
+	    {
+	      sx: 250, //start x //6th line from top right
+	      sy: 600, //start y
+
+	      cx: 670, //control point x
+	      cy: 200, //control point y
+	      
+	      ex: 800, 
+	      ey: 130
+	    },
+
+	    {
+	      sx: 300, //start x //5rd line from top right
+	      sy: 600, //start y
+
+	      cx: 670, //control point x
+	      cy: 210, //control point y
+	      
+	      ex: 800, 
+	      ey: 110
+	    },
+
+	    {
+	      sx: 350, //start x //4rd line from top right
+	      sy: 600, //start y
+
+	      cx: 680, //control point x
+	      cy: 210, //control point y
+	      
+	      ex: 800, 
+	      ey: 90
+	    },
+
+	    {
+	      sx: 400, //start x //3rd line from top right
+	      sy: 600, //start y
+
+	      cx: 690, //control point x
+	      cy: 210, //control point y
+
+	      ex: 800, 
+	      ey: 60
+	    },
+
+	    {
+	      sx: 450, //start x //first line from top right
+	      sy: 600, //start y
+
+	      cx: 700, //control point x
+	      cy: 200, //control point y
+
+	      ex: 800, 
+	      ey: 40
 	    },
 	    {
-	      sx: 0, //start x
-	      sy: 550, //start y
-	      cx: 300, //control point x
-	      cy: 500, //control point y
+	      sx: 500, //start x //first line from top right
+	      sy: 600, //start y
+
+	      cx: 700, //control point x
+	      cy: 200, //control point y
+
 	      ex: 800, 
 	      ey: 10
-	    },
-	    {
-	      sx: 0, //start x
-	      sy: 580, //start y
-	      cx: 300, //control point x
-	      cy: 500, //control point y
-	      ex: 790, 
-	      ey: 0
-	    },
-	    {
-	      sx: 0, //start x
-	      sy: 600, //start y
-	      cx: 300, //control point x
-	      cy: 500, //control point y
-	      ex: 770, 
-	      ey: 0
-	    },
-	    {
-	      sx: 30, //start x
-	      sy: 600, //start y
-	      cx: 300, //control point x
-	      cy: 500, //control point y
-	      ex: 750, 
-	      ey: 0
 	    }
 	],
 
@@ -190,39 +342,93 @@ var tide = {
 	    this.draw();
 	},
 	settings: {
-		isLeft: true
+		isLeft: true,
+		isUp: true
 	},
 
 	draw: function() {
+		var speed = .5;
 		if (art.ui.canvas.getContext) {  
-			//console.log(this);  
 		    var ctx = art.ui.canvas.getContext('2d');
 
-		    //ctx.save();
 		    ctx.clearRect(0,0,800,600); // clear canvas
-		    //flights.draw();
-		    //ctx.save();
-		    // Quadratric curves example
 		      
 		    for(var i = 0; i < tide.lines.length; i++) {
-		    	//console.log(this);
 		        ctx.beginPath();
 		        ctx.moveTo(tide.lines[i].sx,tide.lines[i].sy); //starting point
 		        ctx.quadraticCurveTo(tide.lines[i].cx,tide.lines[i].cy,tide.lines[i].ex,tide.lines[i].ey);
 		        ctx.strokeStyle = 'rgba(255,255,255, 0.5)';
 		        ctx.stroke();
 
-		        if(tide.settings.isLeft) {
+
+		        //MOVES CONTROL POINTS FROM RIGHT TO LEFT
+		       /* if(tide.settings.isLeft) {
 		          if(tide.lines[i].cx < 100) {
 		            tide.settings.isLeft = false;
 		          }
-		          tide.lines[i].cx = tide.lines[i].cx - 1;
+		          tide.lines[i].cx = tide.lines[i].cx - 2;
 		        } else {
 		          if(tide.lines[i].cx > 600) {
 		            tide.settings.isLeft = true;
 		          }
-		          tide.lines[i].cx = tide.lines[i].cx + 1;
-		        }    
+		          tide.lines[i].cx = tide.lines[i].cx + 2;
+		        } */
+
+
+
+
+		        /* if(tide.settings.isUp) {
+		          if(tide.lines[i].ey < 100) {
+		            tide.settings.isUp = false;
+		          }*/
+		          //tide.lines[i].ey = tide.lines[i].ey - 1;
+		        //} else {
+		        //
+		        //MOVES right side DOWN
+		        
+		        //if(tide.settings.isUp) {
+		        //
+		        //*******THIS KIND OF LOOKS GOOD
+		          	if( (tide.lines[i].ey > 0 && tide.lines[i].ey < 600 )) {
+		          		console.log(tide.lines[i].ey);
+		            	tide.settings.isUp = false;
+		            	tide.lines[i].ey = tide.lines[i].ey + speed;
+			          	tide.lines[i].cy = tide.lines[i].cy + speed;
+			          	tide.lines[i].cx = tide.lines[i].cx - speed;
+		          	}
+
+		          	if( tide.lines[i].ey > 500 && tide.lines[i].ex > 300) {
+		          		tide.lines[i].ex = tide.lines[i].ex - speed;
+			          	tide.lines[i].cy = tide.lines[i].cy + speed;
+			          	tide.lines[i].cx = tide.lines[i].cx - speed;
+		          	}
+
+		          	/*tide.lines[i].ey = tide.lines[i].ey + speed;
+		          	tide.lines[i].cy = tide.lines[i].cy + speed;
+		          	tide.lines[i].cx = tide.lines[i].cx - speed;*/
+		         //******* END THIS KIND OF LOOKS GOOD
+		         //
+		         //
+		          	//tide.lines[i].ex = tide.lines[i].ex + 1;
+		        /*} else {
+					if( (tide.lines[i].ey < 400)) {
+						tide.settings.isUp = true;
+					}
+					tide.lines[i].ey = tide.lines[i].ey - speed;
+					tide.lines[i].cy = tide.lines[i].cy + speed * 2;
+		          	tide.lines[i].cx = tide.lines[i].cx - speed;
+		          	//tide.lines[i].ex = tide.lines[i].ex - 1;
+		        }*/
+
+		          /*if(tide.lines[i].sy > 100) {
+		            //tide.settings.isUp = true;
+		          	tide.lines[i].sy = tide.lines[i].sy - 1;
+		          	tide.lines[i].sx = tide.lines[i].sx + Math.random();
+		          }*/
+		        //}   
+
+		        /*tide.lines[i].ex = tide.lines[i].ex + 1; //moves right down
+		        tide.lines[i].ey = tide.lines[i].ey - 1;*/
 		    }
 
 	      	//ctx.restore();
@@ -419,21 +625,22 @@ var art = {
 	init: function() {
 		binaryClock.runBinaryClock();
 		this.getWeather(); 
-		marines.getInfo();
+		//marines.getInfo();
 		if(!this.settings.isDev) {
 			window.setInterval(this.getWeather, 600000); //600000 = 10 minutes
 
 		}
+
 		if(this.settings.isDev) {
-			window.setInterval(marines.getInfo, 5000);
+			//window.setInterval(marines.getInfo, 5000);
 		}
 
-		this.moveOffice();
-		window.setInterval(this.moveOffice, 5000);
+		//this.moveOffice();
+		//window.setInterval(this.moveOffice, 5000);
 
 		
 		
-		//tide.initCanvas();
+		tide.initCanvas();
 		//flights.draw();
 	},
 
