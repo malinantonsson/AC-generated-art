@@ -433,7 +433,9 @@ var tide = {
 	},
 
 	draw: function() {
-		var speed = 2;
+		var speed = 1;
+		//console.log(art);
+		var wind = art.settings.wind; //used to be 1
 
 		var xMax = 1000;
 		var xMin = -200;
@@ -467,14 +469,14 @@ var tide = {
 	            	if(!tide.lines[i].eUp) {
 
 	            		if(tide.lines[i].cy >= cyMax && tide.lines[i].cUp) {
-			          		tide.lines[i].cy = tide.lines[i].cy + speed;
+			          		tide.lines[i].cy = tide.lines[i].cy + wind;
 			         	}
 
 			         	if (tide.lines[i].cy == cyMax) {
 							tide.lines[i].cUp = false;
 			         	}
 
-			          	tide.lines[i].cx = tide.lines[i].cx - speed;
+			          	tide.lines[i].cx = tide.lines[i].cx - wind;
 
 			        } else {
 
@@ -487,17 +489,17 @@ var tide = {
 			         	}
 
 			         	if(tide.lines[i].cUp) {
-			          		tide.lines[i].cy = tide.lines[i].cy + speed;
+			          		tide.lines[i].cy = tide.lines[i].cy + wind;
 			         	}
 
-			          	tide.lines[i].cx = tide.lines[i].cx + speed;
+			          	tide.lines[i].cx = tide.lines[i].cx + wind;
 			        }
 	          	}
 
 	          	if( !tide.lines[i].eUp && tide.lines[i].ey > 500 && tide.lines[i].ex > 200) {
 	          		tide.lines[i].ex = tide.lines[i].ex - speed;
 		          	tide.lines[i].cy = tide.lines[i].cy - speed * 2;
-		          	tide.lines[i].cx = tide.lines[i].cx + speed * 2;
+		          	tide.lines[i].cx = tide.lines[i].cx + wind * 2;
 	          	}
 
 
@@ -542,15 +544,15 @@ var tide = {
 					tide.lines[i].cUp = false;
 
 				} else if (tide.lines[i].cy < cyMin) {
-					tide.lines[i].cy = tide.lines[i].cy + speed;
+					tide.lines[i].cy = tide.lines[i].cy + wind;
 					tide.lines[i].cUp = true;
 
 				} else if ( tide.lines[i].cx > cyMax ) {
-					tide.lines[i].cx = tide.lines[i].cx - speed;
+					tide.lines[i].cx = tide.lines[i].cx - wind;
 					tide.lines[i].cLeft = true;
 
 				} else if (tide.lines[i].cx < cxMin ) {
-					tide.lines[i].cx = tide.lines[i].cx + speed;
+					tide.lines[i].cx = tide.lines[i].cx + wind;
 					tide.lines[i].cLeft = false;
 				}
 
@@ -600,7 +602,7 @@ var tide = {
 		    }
 
 	      	//ctx.restore();
-			//window.requestAnimationFrame(tide.draw);
+			window.requestAnimationFrame(tide.draw);
 		}
 	}
 }
@@ -791,6 +793,8 @@ var marines = {
 
 var art = {
 	init: function() {
+		var self = this;
+
 		binaryClock.runBinaryClock();
 		this.getWeather(); 
 		//marines.getInfo();
@@ -806,7 +810,10 @@ var art = {
 		//this.moveOffice();
 		//window.setInterval(this.moveOffice, 5000);
 
-		
+		window.setInterval(function() {
+			//console.log(this);
+			self.settings.wind = Math.random() * 5;
+		}, 1000);
 		
 		tide.initCanvas();
 		//flights.draw();
@@ -820,6 +827,7 @@ var art = {
 	}, 
 
 	settings: {
+		wind: 1,
 		marineIndex: 1, //dev tool
 		isDev: true,
 		isChangeColour: false,
