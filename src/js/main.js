@@ -186,7 +186,14 @@ var tide = {
 	      cy: 160, //control point y
 	      
 	      ex: 800, 
-	      ey: 300
+	      ey: 300,
+
+	      eUp: false,
+	      cUp: false,
+	      sUp: false,
+	      eLeft: false,
+	      cLeft: false,
+	      sLeft: true
 	    },
 
 
@@ -198,7 +205,14 @@ var tide = {
 	      cy: 160, //control point y
 	      
 	      ex: 800, 
-	      ey: 270
+	      ey: 270,
+
+	      eUp: false,
+	      cUp: false,
+	      sUp: false,
+	      eLeft: false,
+	      cLeft: false,
+	      sLeft: true
 	    },
 
 	    {
@@ -209,7 +223,14 @@ var tide = {
 	      cy: 160, //control point y
 	      
 	      ex: 800, 
-	      ey: 250
+	      ey: 250,
+
+	      eUp: false,
+	      cUp: false,
+	      sUp: false,
+	      eLeft: false,
+	      cLeft: false,
+	      sLeft: true
 	    },
 
 	    {
@@ -220,7 +241,14 @@ var tide = {
 	      cy: 150, //control point y
 	      
 	      ex: 800, 
-	      ey: 230
+	      ey: 230,
+
+	      eUp: false,
+	      cUp: false,
+	      sUp: false,
+	      eLeft: false,
+	      cLeft: false,
+	      sLeft: true
 	    },
 
 	    {
@@ -231,7 +259,14 @@ var tide = {
 	      cy: 150, //control point y
 	      
 	      ex: 800, 
-	      ey: 210
+	      ey: 210,
+
+	      eUp: false,
+	      cUp: false,
+	      sUp: false,
+	      eLeft: false,
+	      cLeft: false,
+	      sLeft: true
 	    },
 
 	    {
@@ -242,7 +277,14 @@ var tide = {
 	      cy: 170, //control point y
 	      
 	      ex: 800, 
-	      ey: 190
+	      ey: 190,
+
+	      eUp: false,
+	      cUp: false,
+	      sUp: false,
+	      eLeft: false,
+	      cLeft: false,
+	      sLeft: true
 	    },
 
 	    {
@@ -253,7 +295,14 @@ var tide = {
 	      cy: 180, //control point y
 	      
 	      ex: 800, 
-	      ey: 170
+	      ey: 170,
+
+	      eUp: false,
+	      cUp: false,
+	      sUp: false,
+	      eLeft: false,
+	      cLeft: false,
+	      sLeft: true
 	    },
 
 	    {
@@ -264,7 +313,14 @@ var tide = {
 	      cy: 190, //control point y
 	      
 	      ex: 800, 
-	      ey: 150
+	      ey: 150,
+
+	      eUp: false,
+	      cUp: false,
+	      sUp: false,
+	      eLeft: false,
+	      cLeft: false,
+	      sLeft: true
 	    },
 
 	    {
@@ -275,7 +331,14 @@ var tide = {
 	      cy: 200, //control point y
 	      
 	      ex: 800, 
-	      ey: 130
+	      ey: 130,
+
+	      eUp: false,
+	      cUp: false,
+	      sUp: false,
+	      eLeft: false,
+	      cLeft: false,
+	      sLeft: true
 	    },
 
 	    {
@@ -286,7 +349,14 @@ var tide = {
 	      cy: 210, //control point y
 	      
 	      ex: 800, 
-	      ey: 110
+	      ey: 110,
+
+	      eUp: false,
+	      cUp: false,
+	      sUp: false,
+	      eLeft: false,
+	      cLeft: false,
+	      sLeft: true
 	    },
 
 	    {
@@ -297,7 +367,10 @@ var tide = {
 	      cy: 210, //control point y
 	      
 	      ex: 800, 
-	      ey: 90
+	      ey: 90,
+
+	      eUp: false,
+	      cUp: false
 	    },
 
 	    {
@@ -308,7 +381,10 @@ var tide = {
 	      cy: 210, //control point y
 
 	      ex: 800, 
-	      ey: 60
+	      ey: 60,
+
+	      eUp: false,
+	      cUp: false
 	    },
 
 	    {
@@ -319,7 +395,10 @@ var tide = {
 	      cy: 200, //control point y
 
 	      ex: 800, 
-	      ey: 40
+	      ey: 40,
+
+	      eUp: false,
+	      cUp: false
 	    },
 	    {
 	      sx: 500, //start x //first line from top right
@@ -329,7 +408,14 @@ var tide = {
 	      cy: 200, //control point y
 
 	      ex: 800, 
-	      ey: 10
+	      ey: 10,
+
+	      eUp: false,
+	      cUp: false,
+	      sUp: false,
+	      eLeft: false,
+	      cLeft: false,
+	      sLeft: true
 	    }
 	],
 
@@ -347,7 +433,20 @@ var tide = {
 	},
 
 	draw: function() {
-		var speed = 1;
+		var speed = 2;
+
+		var xMax = 1000;
+		var xMin = -200;
+
+		var yMax = 800;
+		var yMin = -200;
+
+		var cxMax = 800;
+		var cxMin = 0;
+
+		var cyMax = 600;
+		var cyMin = 0;
+
 		if (art.ui.canvas.getContext) {  
 		    var ctx = art.ui.canvas.getContext('2d');
 
@@ -363,42 +462,111 @@ var tide = {
 		        //*******THIS KIND OF LOOKS GOOD
 		        // RIGHT SIDE
 	          	if( (tide.lines[i].ey > 0 && tide.lines[i].ey < 600 )) {
-	          		//console.log(tide.lines[i].ey);
-	            	//tide.settings.isUp = false;
 	            	tide.lines[i].ey = tide.lines[i].ey + speed;
-		          	tide.lines[i].cy = tide.lines[i].cy + speed;
-		          	tide.lines[i].cx = tide.lines[i].cx - speed;
+
+	            	if(!tide.lines[i].eUp) {
+
+	            		if(tide.lines[i].cy >= cyMax && tide.lines[i].cUp) {
+			          		tide.lines[i].cy = tide.lines[i].cy + speed;
+			         	}
+
+			         	if (tide.lines[i].cy == cyMax) {
+							tide.lines[i].cUp = false;
+			         	}
+
+			          	tide.lines[i].cx = tide.lines[i].cx - speed;
+
+			        } else {
+
+			        	if(tide.lines[i].cy <= 0 && !tide.lines[i].cUp) {
+			        		tide.lines[i].cy = tide.lines[i].cy - speed;
+			        	}
+
+			        	if (tide.lines[i].cy <= 0) {
+							tide.lines[i].cUp = true;
+			         	}
+
+			         	if(tide.lines[i].cUp) {
+			          		tide.lines[i].cy = tide.lines[i].cy + speed;
+			         	}
+
+			          	tide.lines[i].cx = tide.lines[i].cx + speed;
+			        }
 	          	}
 
-	          	if( tide.lines[i].ey > 500 && tide.lines[i].ex > 200) {
+	          	if( !tide.lines[i].eUp && tide.lines[i].ey > 500 && tide.lines[i].ex > 200) {
 	          		tide.lines[i].ex = tide.lines[i].ex - speed;
 		          	tide.lines[i].cy = tide.lines[i].cy - speed * 2;
 		          	tide.lines[i].cx = tide.lines[i].cx + speed * 2;
 	          	}
 
-	          	/*if( tide.lines[i].ey >= 400 && tide.lines[i].ex > 100 ) {
-	          		tide.lines[i].ex = tide.lines[i].ex - 1;
-	          		tide.lines[i].ey = tide.lines[i].ey - 1;
-	          	}*/
 
-	          	/*if( tide.lines[i].ey >= 590 && tide.lines[i].ex < 200) {
+	          	if( tide.lines[i].ey >= 500 && tide.lines[i].ex < 400) {
+	          		tide.lines[i].eUp = true;
+				}
+
+				if( tide.lines[i].eUp) {
+
 	          		tide.lines[i].ex = tide.lines[i].ex - speed;
-	          		tide.lines[i].ey = tide.lines[i].ey - .1;
-	          	}*/
+	          		tide.lines[i].ey = tide.lines[i].ey - speed * 2;
+				}
+
+				if( tide.lines[i].eUp && tide.lines[i].ey < 100 && tide.lines[i].ex < 100 ) {
+					tide.lines[i].eUp = false;
+				}
+
+
+
+
+				if(tide.lines[i].ey > yMax) {
+					tide.lines[i].ey = tide.lines[i].ey - speed;
+					tide.lines[i].eUp = false;
+
+				} else if (tide.lines[i].ey < yMin) {
+					tide.lines[i].ey = tide.lines[i].ey + speed;
+					tide.lines[i].eUp = true;
+
+				} else if ( tide.lines[i].ex > xMax ) {
+					tide.lines[i].ex = tide.lines[i].ex - speed;
+					tide.lines[i].eLeft = true;
+
+				} else if (tide.lines[i].ex < xMin ) {
+					tide.lines[i].ex = tide.lines[i].ex + speed;
+					tide.lines[i].eLeft = false;
+				}
+
+
+
+				if(tide.lines[i].cy > cyMax) {
+					tide.lines[i].cy = tide.lines[i].cy - speed;
+					tide.lines[i].cUp = false;
+
+				} else if (tide.lines[i].cy < cyMin) {
+					tide.lines[i].cy = tide.lines[i].cy + speed;
+					tide.lines[i].cUp = true;
+
+				} else if ( tide.lines[i].cx > cyMax ) {
+					tide.lines[i].cx = tide.lines[i].cx - speed;
+					tide.lines[i].cLeft = true;
+
+				} else if (tide.lines[i].cx < cxMin ) {
+					tide.lines[i].cx = tide.lines[i].cx + speed;
+					tide.lines[i].cLeft = false;
+				}
+
 
 
 
 
 	          	/*if( tide.lines[i].ex <= 200) {
-	          		tide.lines[i].ey = tide.lines[i].ey + speed;
+	          		tide.lines[i].cy = tide.lines[i].ey + speed;
 	          	}*/
 
 		         //******* END THIS KIND OF LOOKS GOOD
 		         //
 		         // LEFT SIDE
 		        if( (tide.lines[i].sy >= 0 && tide.lines[i].sy < 600  && tide.lines[i].sx < 600 )) {
-	          		//console.log(tide.lines[i].sy);
-	            	//tide.settings.isUp = false;
+
 	            	tide.lines[i].sy = tide.lines[i].sy - speed;
 	          	}
 
@@ -409,19 +577,30 @@ var tide = {
 
 	          	if( tide.lines[i].sy < 0) {
 	          		tide.lines[i].sx = tide.lines[i].sx + speed;
-	          		//tide.lines[i].sy = tide.lines[i].sy - speed;
 	          	}
 
-	          	/*if( tide.lines[i].sx >= 600) {
-	          		tide.lines[i].sy = tide.lines[i].sy + speed;
-	          		//tide.lines[i].sy = tide.lines[i].sy - speed;
-	          	}*/
-		         
+
+	          	if(tide.lines[i].sy > yMax) {
+					tide.lines[i].sy = tide.lines[i].sy - speed;
+					tide.lines[i].sUp = false;
+
+				} else if (tide.lines[i].sy < yMin) {
+					tide.lines[i].sy = tide.lines[i].sy + speed;
+					tide.lines[i].sUp = true;
+
+				} else if ( tide.lines[i].sx > yMax ) {
+					tide.lines[i].sx = tide.lines[i].sx - speed;
+					tide.lines[i].sLeft = true;
+
+				} else if (tide.lines[i].sx < xMin ) {
+					tide.lines[i].sx = tide.lines[i].sx + speed;
+					tide.lines[i].sLeft = false;
+				}
 		       
 		    }
 
 	      	//ctx.restore();
-			window.requestAnimationFrame(tide.draw);
+			//window.requestAnimationFrame(tide.draw);
 		}
 	}
 }
