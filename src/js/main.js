@@ -190,7 +190,11 @@ var tide = {
 	    this.draw();
 	},
 	settings: {
-		isLeft: true
+		isLeft: true,
+		issUp: true,
+		issLeft: true,
+		iseUp: false,
+		iseLeft: true
 	},
 
 	draw: function() {
@@ -205,24 +209,82 @@ var tide = {
 		    // Quadratric curves example
 		      
 		    for(var i = 0; i < tide.lines.length; i++) {
+		    	var wind = Math.random() * 2;
 		    	//console.log(this);
 		        ctx.beginPath();
 		        ctx.moveTo(tide.lines[i].sx,tide.lines[i].sy); //starting point
 		        ctx.quadraticCurveTo(tide.lines[i].cx,tide.lines[i].cy,tide.lines[i].ex,tide.lines[i].ey);
-		        ctx.strokeStyle = 'rgba(255,255,255, 0.5)';
+		        ctx.strokeStyle = 'rgba(255,255,255, 0.3)';
 		        ctx.stroke();
 
+		        //control points
 		        if(tide.settings.isLeft) {
-		          if(tide.lines[i].cx < 100) {
+		          if(tide.lines[i].cx < -200) {
 		            tide.settings.isLeft = false;
 		          }
-		          tide.lines[i].cx = tide.lines[i].cx - 1;
+		          tide.lines[i].cx = tide.lines[i].cx - 3;
 		        } else {
-		          if(tide.lines[i].cx > 600) {
+		          if(tide.lines[i].cx > 1000) {
 		            tide.settings.isLeft = true;
 		          }
-		          tide.lines[i].cx = tide.lines[i].cx + 1;
-		        }    
+		          tide.lines[i].cx = tide.lines[i].cx + 3;
+		        }   
+
+
+
+		        //starting line up
+		        if(tide.settings.issUp) {
+		          if(tide.lines[i].sy < -200) {
+		            tide.settings.issUp = false;
+		          }
+		          tide.lines[i].sy = tide.lines[i].sy - wind;
+		        } else {
+		          if(tide.lines[i].sy > 1000) {
+		            tide.settings.issUp = true;
+		          }
+		          tide.lines[i].sy = tide.lines[i].sy + wind;
+		        }  
+
+
+		        if(tide.settings.issLeft) {
+		          if(tide.lines[i].sx < -200) {
+		            tide.settings.issLeft = false;
+		          }
+		          tide.lines[i].sx = tide.lines[i].sx - .3;
+		        } else {
+		          if(tide.lines[i].sx > 100) {
+		            tide.settings.issLeft = true;
+		          }
+		          tide.lines[i].sx = tide.lines[i].sx + .3;
+		        }   
+
+
+
+		        if(tide.settings.iseUp) {
+		          if(tide.lines[i].ey < -200) {
+		            tide.settings.iseUp = false;
+		          }
+		          tide.lines[i].ey = tide.lines[i].ey - wind;
+		        } else {
+		          if(tide.lines[i].ey > 1000) {
+		            tide.settings.iseUp = true;
+		          }
+		          tide.lines[i].ey = tide.lines[i].ey + wind;
+		        }  
+
+
+
+		        if(tide.settings.iseLeft) {
+		          if(tide.lines[i].ex < 700) {
+		            tide.settings.iseLeft = false;
+		          }
+		          tide.lines[i].ex = tide.lines[i].ex - .5;
+		        } else {
+		          if(tide.lines[i].ex > 1200) {
+		            tide.settings.iseLeft = true;
+		          }
+		          tide.lines[i].ex = tide.lines[i].ex + .5;
+		        }   
 		    }
 
 	      	//ctx.restore();
@@ -433,7 +495,7 @@ var art = {
 
 		
 		
-		//tide.initCanvas();
+		tide.initCanvas();
 		//flights.draw();
 	},
 
