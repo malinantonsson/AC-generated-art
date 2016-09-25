@@ -199,7 +199,6 @@ var tide = {
 
 	draw: function() {
 		if (art.ui.canvas.getContext) {  
-			//console.log(this);  
 		    var ctx = art.ui.canvas.getContext('2d');
 
 		    //ctx.save();
@@ -210,7 +209,7 @@ var tide = {
 		      
 		    for(var i = 0; i < tide.lines.length; i++) {
 		    	var wind = Math.random() * 2;
-		    	//console.log(this);
+
 		        ctx.beginPath();
 		        ctx.moveTo(tide.lines[i].sx,tide.lines[i].sy); //starting point
 		        ctx.quadraticCurveTo(tide.lines[i].cx,tide.lines[i].cy,tide.lines[i].ex,tide.lines[i].ey);
@@ -250,12 +249,12 @@ var tide = {
 		          if(tide.lines[i].sx < -200) {
 		            tide.settings.issLeft = false;
 		          }
-		          tide.lines[i].sx = tide.lines[i].sx - .3;
+		          tide.lines[i].sx = tide.lines[i].sx - 0.3;
 		        } else {
 		          if(tide.lines[i].sx > 100) {
 		            tide.settings.issLeft = true;
 		          }
-		          tide.lines[i].sx = tide.lines[i].sx + .3;
+		          tide.lines[i].sx = tide.lines[i].sx + 0.3;
 		        }   
 
 
@@ -278,12 +277,12 @@ var tide = {
 		          if(tide.lines[i].ex < 700) {
 		            tide.settings.iseLeft = false;
 		          }
-		          tide.lines[i].ex = tide.lines[i].ex - .5;
+		          tide.lines[i].ex = tide.lines[i].ex - 0.5;
 		        } else {
 		          if(tide.lines[i].ex > 1200) {
 		            tide.settings.iseLeft = true;
 		          }
-		          tide.lines[i].ex = tide.lines[i].ex + .5;
+		          tide.lines[i].ex = tide.lines[i].ex + 0.5;
 		        }   
 		    }
 
@@ -316,8 +315,6 @@ var flights = {
 		    for(var i = 0; i < this.flights.length; i++) {
 		    	var h = this.flights[i].height / 10;
 		    	var yPos = h / 2;
-		    	//console.log(yPos);
-		    	//console.log(h);
 			    ctx.beginPath();
 			    ctx.moveTo(h,0);
 			    ctx.lineTo(yPos,0);
@@ -353,10 +350,11 @@ var marines = {
 
 		var y = (lat / this.grid.height) * 100;
 		var x = (lon / this.grid.width) * 100;
+		var wrapper;
 		
 		if(ship.isNew) {
 
-			var wrapper = document.createElement('div');
+			wrapper = document.createElement('div');
 			wrapper.id = ship.id + '-wrapper';
 			wrapper.className = 'ship--wrapper';
 			art.ui.shipsWrapper.appendChild(wrapper);
@@ -366,8 +364,8 @@ var marines = {
 			wrapper.style.left = x + '%';
 
 		} else {
-			var wrapper = document.getElementById(ship.id + '-wrapper');
-			if(wrapper != null || wrapper != undefined) {
+			wrapper = document.getElementById(ship.id + '-wrapper');
+			if(wrapper !== null || wrapper !== undefined) {
 				wrapper.style.top = y + '%';
 				wrapper.style.left = x + '%';
 			}
@@ -381,7 +379,6 @@ var marines = {
 
 	handleShips: function(data) {
 		var self = marines;
-		//console.log('number of ships: ' + data.length);
 		var newShips = [];		
 		
 		for(var i = 0; i < data.length; i++) {
@@ -427,7 +424,6 @@ var marines = {
 					self.currentDisplayedShips.splice(shipsToBeRemoved[r], 1);
 				}
 			}
-			//console.log('current ships after: ' + self.currentDisplayedShips.length);
 		}
 	},
 
@@ -465,7 +461,6 @@ var marines = {
 				.then(self.handleShips);	
 
 			} else { //if fetch is not supported, fallback to Ajax
-				console.log('using ajax');
 				$.ajax('../marine-example-' + art.settings.marineIndex + '.json')
 				.done(self.handleShips);
 			}
@@ -562,19 +557,15 @@ var art = {
 		var x, y;
 		
 		if (deg <= 90) { 
-			console.log('is ne');
 			x = -10;
 			y = 10;
 		} else if(deg <= 180) { 
-			console.log('is se');
 			x = 10;
 			y = 10;
 		} else if(deg <= 270) {
-			console.log('is sw');
 			x = 10;
 			y= -10;
 		} else if(deg <= 360) {
-			console.log('is nw');
 			x = -10;
 			y = -10;
 		}
@@ -597,7 +588,6 @@ var art = {
 					return response.json();
 				})
 				.then(function(weather) {
-					console.log(weather);
 					var temp = Math.round(weather.main.temp);
 					self.setColour(temp);
 
@@ -627,7 +617,6 @@ var art = {
 					return response.json();
 				})
 				.then(function(weather) {
-					console.log(weather);
 					var current_observation = weather.current_observation;
 					var temp = Math.round(current_observation.temp_c);
 					self.setColour(temp);
@@ -662,7 +651,6 @@ var art = {
 		}
 	}
 }
-
 
 $( document ).ready(function() {
   art.init();
